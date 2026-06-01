@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LCW 세계관 설정 생성기</title>
+<style>
+:root{--boxColor:#111827;--accent:#b3131b;--accent2:#d71920;}
+*{box-sizing:border-box}
+body{margin:0;background:#070707;color:#f5f5f5;font-family:Arial,'Noto Sans KR',sans-serif}
+header{height:64px;background:#0b0b0d;border-bottom:2px solid var(--accent);display:flex;align-items:center;justify-content:space-between;padding:0 22px;position:sticky;top:0;z-index:10}
+.logo{font-weight:900;font-size:22px;letter-spacing:.5px}.logo span{color:var(--accent2)}
+.menu button{background:transparent;color:#eee;border:1px solid #333;padding:10px 14px;margin-left:6px;border-radius:8px;cursor:pointer;font-weight:700}.menu button:hover,.menu button.active{background:var(--accent);border-color:var(--accent2)}
+main{display:grid;grid-template-columns:300px minmax(360px,520px);gap:18px;padding:18px;justify-content:center}.panel,.preview{background:#111;border:1px solid #2a2a2a;border-radius:14px;box-shadow:0 0 30px rgba(155,17,30,.18)}
+.panel{padding:18px}.panel h2,.preview h2{margin:0 0 16px;border-left:5px solid var(--accent2);padding-left:10px}.field{margin-bottom:12px}.field label{display:block;font-size:13px;color:#bbb;margin-bottom:5px;font-weight:700}input,textarea{width:100%;background:#1b1b1b;color:#fff;border:1px solid #444;border-radius:8px;padding:9px;font-size:14px}input[type="color"]{height:42px;padding:4px}textarea{min-height:64px;resize:vertical}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{width:100%;border:0;background:var(--accent);color:white;border-radius:9px;padding:11px;margin-top:8px;font-weight:900;cursor:pointer}.btn.secondary{background:#272727;border:1px solid #555}.btn:hover{filter:brightness(1.12)}
+.preview{padding:0;overflow:hidden;max-width:520px}.wiki-title{background:var(--boxColor);border-bottom:2px solid var(--accent2);text-align:center;padding:12px}.wiki-title .ko{font-size:22px;font-weight:900}.wiki-title .en{font-size:14px;font-weight:700;color:#ddd;margin-top:3px}.image-box{height:170px;background:linear-gradient(135deg,#160005,#141414,#320006);display:flex;align-items:center;justify-content:center;color:#777;font-weight:900;font-size:20px;border-bottom:1px solid #333;overflow:hidden}.image-box img{width:100%;height:100%;object-fit:cover}
+table{width:100%;border-collapse:collapse;background:#f3f3f3;color:#111;font-size:14px}th{width:112px;background:var(--boxColor);color:white;border:1px solid #cfcfcf;padding:9px;text-align:center}td{border:1px solid #cfcfcf;padding:9px;white-space:pre-wrap}.section-title td{background:#e9e9e9;font-weight:900;color:#9b111e;text-align:center;padding:8px}.hidden{display:none}.small{font-size:12px;color:#aaa;line-height:1.5;margin-top:10px}.remove{float:right;background:#222;color:#fff;border:1px solid #555;border-radius:6px;cursor:pointer}.section-item textarea{display:none}.section-item input{font-weight:900;color:#ffd8d8}
+.exit-print{display:none;position:fixed;top:14px;right:14px;z-index:9999;background:#b3131b;color:#fff;border:1px solid #fff;border-radius:10px;padding:10px 14px;font-weight:900;cursor:pointer}.print-mode .exit-print{display:block}.print-mode header,.print-mode .panel{display:none}.print-mode main{display:block;padding:0}.print-mode .preview{border-radius:0;box-shadow:none;border:0;max-width:520px;margin:0 auto}
+@media(max-width:850px){main{grid-template-columns:1fr}.menu{display:flex;gap:4px;overflow:auto}.menu button{white-space:nowrap;margin-left:0}.preview{max-width:none}}
+</style>
+</head>
+<body>
+<button class="exit-print" onclick="togglePrintMode()">← 편집으로 돌아가기</button>
+<header>
+  <div class="logo"><span>LCW</span> 세계관 설정 생성기</div>
+  <nav class="menu">
+    <button onclick="showPage('home',event)">홈</button>
+    <button onclick="showPage('nation',event)">국가 만들기</button>
+    <button class="active" onclick="showPage('person',event)">인물 만들기</button>
+    <button onclick="showPage('group',event)">단체 만들기</button>
+  </nav>
+</header>
+<main>
+  <section class="panel">
+    <h2 id="editorTitle">인물 만들기</h2>
+    <div id="homeBox" class="hidden">
+      <p>메뉴에서 만들 항목을 선택하면 위키식 설정표를 만들 수 있습니다.</p>
+    </div>
+    <div id="editorBox">
+      <div class="row">
+        <div class="field"><label>상단 이름</label><input id="titleKo" value="인물명" oninput="render()"></div>
+        <div class="field"><label>영문/부제</label><input id="titleEn" value="Character Name" oninput="render()"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label>상단 박스 색상</label><input type="color" id="boxColor" value="#111827" oninput="setBoxColor(this.value)"></div>
+        <div class="field"><label>대표 이미지</label><input type="file" accept="image/*" onchange="loadImage(event)"></div>
+      </div>
+      <div id="fields"></div>
+      <button class="btn" onclick="addField()">칸 추가</button>
+      <button class="btn secondary" onclick="addSection()">구분 제목 추가</button>
+      <button class="btn secondary" onclick="togglePrintMode()">스크린샷 모드</button>
+      <p class="small">스크린샷 모드에서는 오른쪽 위 버튼으로 다시 편집 화면으로 돌아올 수 있습니다. 저장은 브라우저 안에서만 됩니다.</p>
+    </div>
+  </section>
+  <section class="preview" id="captureArea">
+    <div class="wiki-title"><div class="ko" id="pTitleKo"></div><div class="en" id="pTitleEn"></div></div>
+    <div class="image-box" id="pImage">IMAGE</div>
+    <table><tbody id="previewTable"></tbody></table>
+  </section>
+</main>
+<script>
+let type='person';
+const templates={
+  person:[['본명',''],['이명',''],['출생',''],['소속',''],['직위',''],['성격',''],['외형',''],['역사','']],
+  nation:[
+    ['__section','국가 상징'],['국명',''],['영문명',''],['국기','이미지 칸에 국기를 넣거나 설명 작성'],['국장',''],['표어',''],['국가',''],
+    ['__section','기본 정보'],['수도',''],['최대도시',''],['위치',''],['면적',''],['인구',''],['공용어',''],['화폐',''],['국교',''],
+    ['__section','정치'],['정치체제',''],['국가원수',''],['정부수반',''],['입법부',''],['주요 정당',''],
+    ['__section','역사'],['건국',''],['주요 사건',''],['전쟁/분쟁',''],
+    ['__section','행정·군사·외교'],['행정구역',''],['군대',''],['동맹',''],['외교 관계','']
+  ],
+  group:[['단체명',''],['성격',''],['창설',''],['수장',''],['본부',''],['목적',''],['역사','']]
+};
+function showPage(t,e){
+  document.querySelectorAll('.menu button').forEach(b=>b.classList.remove('active')); if(e) e.target.classList.add('active');
+  type=t; document.getElementById('homeBox').classList.toggle('hidden',t!=='home'); document.getElementById('editorBox').classList.toggle('hidden',t==='home');
+  const names={home:'홈',person:'인물 만들기',nation:'국가 만들기',group:'단체 만들기'}; document.getElementById('editorTitle').textContent=names[t];
+  if(t!=='home'){ document.getElementById('titleKo').value=t==='nation'?'대한민국식 국가 설정표':t==='group'?'단체명':'인물명'; document.getElementById('titleEn').value=t==='nation'?'Nation Profile':t==='group'?'Organization Name':'Character Name'; setFields(templates[t]); }
+}
+function setFields(arr){document.getElementById('fields').innerHTML=''; arr.forEach(x=>x[0]==='__section'?addSection(x[1]):addField(x[0],x[1])); render();}
+function addField(label='',value=''){
+  const wrap=document.createElement('div'); wrap.className='field item';
+  wrap.innerHTML=`<label>항목명 <button class="remove" onclick="this.closest('.item').remove();render()">삭제</button></label><input class="key" value="${escapeAttr(label)}" oninput="render()"><textarea class="val" oninput="render()">${escapeHtml(value)}</textarea>`;
+  document.getElementById('fields').appendChild(wrap); render();
+}
+function addSection(label='구분'){
+  const wrap=document.createElement('div'); wrap.className='field item section-item'; wrap.dataset.section='true';
+  wrap.innerHTML=`<label>구분 제목 <button class="remove" onclick="this.closest('.item').remove();render()">삭제</button></label><input class="key" value="${escapeAttr(label)}" oninput="render()"><textarea class="val"></textarea>`;
+  document.getElementById('fields').appendChild(wrap); render();
+}
+function render(){
+  document.getElementById('pTitleKo').textContent=document.getElementById('titleKo').value||'제목';
+  document.getElementById('pTitleEn').textContent=document.getElementById('titleEn').value||'Subtitle';
+  const tbody=document.getElementById('previewTable'); tbody.innerHTML='';
+  document.querySelectorAll('.item').forEach(item=>{ const k=item.querySelector('.key').value||'항목'; const v=item.querySelector('.val').value||' '; if(item.dataset.section==='true'){tbody.innerHTML+=`<tr class="section-title"><td colspan="2">${escapeHtml(k)}</td></tr>`;} else {tbody.innerHTML+=`<tr><th>${escapeHtml(k)}</th><td>${escapeHtml(v)}</td></tr>`;} });
+}
+function loadImage(e){const file=e.target.files[0]; if(!file)return; const r=new FileReader(); r.onload=()=>{document.getElementById('pImage').innerHTML=`<img src="${r.result}">`;}; r.readAsDataURL(file);}
+function setBoxColor(v){document.documentElement.style.setProperty('--boxColor',v)}
+function togglePrintMode(){document.body.classList.toggle('print-mode');}
+function escapeHtml(s){return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
+function escapeAttr(s){return escapeHtml(s).replace(/`/g,'&#96;')}
+setFields(templates.person); render();
+</script>
+</body>
+</html>
