@@ -3,104 +3,632 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>LCW 세계관 설정 생성기</title>
+<title>HEARTWEAR 공식 위키 설정 생성기</title>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <style>
-:root{--boxColor:#111827;--accent:#b3131b;--accent2:#d71920;}
+:root{
+  --boxColor:#111827;
+  --accent:#b3131b;
+  --accent2:#e11d24;
+  --bg:#070707;
+}
 *{box-sizing:border-box}
-body{margin:0;background:#070707;color:#f5f5f5;font-family:Arial,'Noto Sans KR',sans-serif}
-header{height:64px;background:#0b0b0d;border-bottom:2px solid var(--accent);display:flex;align-items:center;justify-content:space-between;padding:0 22px;position:sticky;top:0;z-index:10}
-.logo{font-weight:900;font-size:22px;letter-spacing:.5px}.logo span{color:var(--accent2)}
-.menu button{background:transparent;color:#eee;border:1px solid #333;padding:10px 14px;margin-left:6px;border-radius:8px;cursor:pointer;font-weight:700}.menu button:hover,.menu button.active{background:var(--accent);border-color:var(--accent2)}
-main{display:grid;grid-template-columns:300px minmax(360px,520px);gap:18px;padding:18px;justify-content:center}.panel,.preview{background:#111;border:1px solid #2a2a2a;border-radius:14px;box-shadow:0 0 30px rgba(155,17,30,.18)}
-.panel{padding:18px}.panel h2,.preview h2{margin:0 0 16px;border-left:5px solid var(--accent2);padding-left:10px}.field{margin-bottom:12px}.field label{display:block;font-size:13px;color:#bbb;margin-bottom:5px;font-weight:700}input,textarea{width:100%;background:#1b1b1b;color:#fff;border:1px solid #444;border-radius:8px;padding:9px;font-size:14px}input[type="color"]{height:42px;padding:4px}textarea{min-height:64px;resize:vertical}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.btn{width:100%;border:0;background:var(--accent);color:white;border-radius:9px;padding:11px;margin-top:8px;font-weight:900;cursor:pointer}.btn.secondary{background:#272727;border:1px solid #555}.btn:hover{filter:brightness(1.12)}
-.preview{padding:0;overflow:hidden;max-width:520px}.wiki-title{background:var(--boxColor);border-bottom:2px solid var(--accent2);text-align:center;padding:12px}.wiki-title .ko{font-size:22px;font-weight:900}.wiki-title .en{font-size:14px;font-weight:700;color:#ddd;margin-top:3px}.image-box{height:170px;background:linear-gradient(135deg,#160005,#141414,#320006);display:flex;align-items:center;justify-content:center;color:#777;font-weight:900;font-size:20px;border-bottom:1px solid #333;overflow:hidden}.image-box img{width:100%;height:100%;object-fit:cover}
-table{width:100%;border-collapse:collapse;background:#f3f3f3;color:#111;font-size:14px}th{width:112px;background:var(--boxColor);color:white;border:1px solid #cfcfcf;padding:9px;text-align:center}td{border:1px solid #cfcfcf;padding:9px;white-space:pre-wrap}.section-title td{background:#e9e9e9;font-weight:900;color:#9b111e;text-align:center;padding:8px}.hidden{display:none}.small{font-size:12px;color:#aaa;line-height:1.5;margin-top:10px}.remove{float:right;background:#222;color:#fff;border:1px solid #555;border-radius:6px;cursor:pointer}.section-item textarea{display:none}.section-item input{font-weight:900;color:#ffd8d8}
-.exit-print{display:none;position:fixed;top:14px;right:14px;z-index:9999;background:#b3131b;color:#fff;border:1px solid #fff;border-radius:10px;padding:10px 14px;font-weight:900;cursor:pointer}.print-mode .exit-print{display:block}.print-mode header,.print-mode .panel{display:none}.print-mode main{display:block;padding:0}.print-mode .preview{border-radius:0;box-shadow:none;border:0;max-width:520px;margin:0 auto}
-@media(max-width:850px){main{grid-template-columns:1fr}.menu{display:flex;gap:4px;overflow:auto}.menu button{white-space:nowrap;margin-left:0}.preview{max-width:none}}
+body{
+  margin:0;
+  background:var(--bg);
+  color:#f5f5f5;
+  font-family:Arial,'Noto Sans KR',sans-serif;
+}
+header{
+  height:64px;
+  background:#0b0b0d;
+  border-bottom:2px solid var(--accent);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 22px;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+.logo{
+  font-weight:900;
+  font-size:22px;
+  letter-spacing:.5px;
+}
+.logo span{color:var(--accent2)}
+.menu{
+  display:flex;
+  gap:6px;
+}
+.menu button{
+  background:transparent;
+  color:#eee;
+  border:1px solid #333;
+  padding:10px 14px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:800;
+}
+.menu button:hover,.menu button.active{
+  background:var(--accent);
+  border-color:var(--accent2);
+}
+
+/* HOME */
+.home-screen{
+  min-height:calc(100vh - 64px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:46px 20px;
+  background:
+    radial-gradient(circle at 22% 20%, rgba(225,29,36,.28), transparent 30%),
+    radial-gradient(circle at 78% 72%, rgba(255,255,255,.08), transparent 30%),
+    linear-gradient(135deg,#020202,#1a0506 60%,#000);
+}
+.hero-box{
+  width:min(920px,92vw);
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:28px;
+  background:rgba(5,5,5,.78);
+  padding:56px 44px;
+  box-shadow:0 0 50px rgba(179,19,27,.34), inset 0 0 34px rgba(255,255,255,.04);
+  position:relative;
+}
+.hero-box:before{
+  content:"";
+  position:absolute;
+  inset:12px;
+  border:1px solid rgba(225,29,36,.28);
+  border-radius:22px;
+  pointer-events:none;
+}
+.hero-kicker{
+  color:#ef4444;
+  font-weight:900;
+  letter-spacing:.25em;
+  font-size:13px;
+  margin-bottom:14px;
+}
+.hero-title{
+  margin:0 0 22px;
+  color:white;
+  font-size:clamp(36px,6vw,76px);
+  line-height:1.05;
+  font-weight:1000;
+  text-shadow:0 0 20px rgba(239,68,68,.42);
+}
+.hero-actions a{
+  position:relative;
+  z-index:3;
+  display:inline-block;
+  border:1px solid rgba(255,255,255,.24);
+  background:#b91c1c;
+  color:#fff;
+  border-radius:12px;
+  padding:14px 20px;
+  font-weight:900;
+  text-decoration:none;
+}
+.hero-actions a:hover{filter:brightness(1.12)}
+
+main{
+  display:grid;
+  grid-template-columns:320px minmax(360px,560px);
+  gap:20px;
+  padding:22px;
+  justify-content:center;
+}
+.panel,.preview{
+  background:#111;
+  border:1px solid #2a2a2a;
+  border-radius:14px;
+  box-shadow:0 0 30px rgba(155,17,30,.18);
+}
+.panel{padding:18px}
+.panel h2{
+  margin:0 0 16px;
+  border-left:5px solid var(--accent2);
+  padding-left:10px;
+}
+.field{margin-bottom:12px}
+.field label{
+  display:block;
+  font-size:13px;
+  color:#bbb;
+  margin-bottom:5px;
+  font-weight:800;
+}
+input,textarea{
+  width:100%;
+  background:#1b1b1b;
+  color:#fff;
+  border:1px solid #444;
+  border-radius:8px;
+  padding:9px;
+  font-size:14px;
+}
+input[type="color"]{height:42px;padding:4px}
+textarea{min-height:66px;resize:vertical}
+.row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.btn{
+  width:100%;
+  border:0;
+  background:var(--accent);
+  color:white;
+  border-radius:9px;
+  padding:11px;
+  margin-top:8px;
+  font-weight:900;
+  cursor:pointer;
+}
+.btn.secondary{
+  background:#272727;
+  border:1px solid #555;
+}
+.btn:hover{filter:brightness(1.12)}
+.small{
+  font-size:12px;
+  color:#aaa;
+  line-height:1.5;
+  margin-top:10px;
+}
+.remove{
+  float:right;
+  background:#222;
+  color:#fff;
+  border:1px solid #555;
+  border-radius:6px;
+  cursor:pointer;
+}
+.section-item textarea{display:none}
+.section-item input{
+  font-weight:900;
+  color:#ffd8d8;
+}
+
+/* Image mode */
+.image-options{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+.image-options button{
+  padding:9px 10px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,.18);
+  background:#151515;
+  color:#fff;
+  cursor:pointer;
+  font-weight:800;
+}
+.image-options button.active{
+  background:#b91c1c;
+  border-color:#ef4444;
+}
+
+/* Preview wiki card */
+.preview{
+  padding:0;
+  overflow:hidden;
+  max-width:560px;
+}
+.wiki-title{
+  background:var(--boxColor);
+  border-bottom:2px solid var(--accent2);
+  text-align:center;
+  padding:12px;
+}
+.wiki-title .ko{
+  font-size:22px;
+  font-weight:900;
+}
+.wiki-title .en{
+  font-size:14px;
+  font-weight:800;
+  color:#ddd;
+  margin-top:3px;
+}
+.image-box{
+  background:#08080a;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#777;
+  font-weight:900;
+  font-size:20px;
+  border-bottom:1px solid #333;
+  overflow:hidden;
+}
+.image-box.portrait{height:560px}
+.image-box.landscape{height:320px}
+.image-box img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:center center;
+  background:#08080a;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  background:#f3f3f3;
+  color:#111;
+  font-size:14px;
+}
+th{
+  width:118px;
+  background:var(--boxColor);
+  color:white;
+  border:1px solid #cfcfcf;
+  padding:9px;
+  text-align:center;
+}
+td{
+  border:1px solid #cfcfcf;
+  padding:9px;
+  white-space:pre-wrap;
+}
+.section-title td{
+  background:#e9e9e9;
+  font-weight:900;
+  color:#9b111e;
+  text-align:center;
+  padding:8px;
+}
+
+/* screenshot mode */
+.exit-print,.save-image{
+  display:none;
+  position:fixed;
+  top:14px;
+  z-index:9999;
+  color:#fff;
+  border:1px solid #fff;
+  border-radius:10px;
+  padding:10px 14px;
+  font-weight:900;
+  cursor:pointer;
+}
+.exit-print{
+  right:14px;
+  background:#b3131b;
+}
+.save-image{
+  right:168px;
+  background:#111;
+}
+.print-mode .exit-print,.print-mode .save-image{display:block}
+.print-mode header,.print-mode .panel{display:none}
+.print-mode main{
+  display:block;
+  padding:0;
+}
+.print-mode .preview{
+  border-radius:0;
+  box-shadow:none;
+  border:0;
+  max-width:560px;
+  margin:0 auto;
+}
+.capturing .exit-print,.capturing .save-image{display:none!important}
+.hidden{display:none!important}
+
+@media(max-width:850px){
+  header{height:auto;min-height:64px;align-items:flex-start;gap:10px;flex-direction:column;padding:14px 16px}
+  .menu{width:100%;overflow:auto}
+  .menu button{white-space:nowrap}
+  main{grid-template-columns:1fr;padding:14px}
+  .preview{max-width:none}
+}
 </style>
 </head>
 <body>
 <button class="exit-print" onclick="togglePrintMode()">← 편집으로 돌아가기</button>
+<button class="save-image" onclick="saveAsImage()">📷 이미지 저장</button>
+
 <header>
-  <div class="logo"><span>LCW</span> 세계관 설정 생성기</div>
+  <div class="logo"><span>HEARTWEAR</span> 설정 생성기</div>
   <nav class="menu">
-    <button onclick="showPage('home',event)">홈</button>
-    <button onclick="showPage('nation',event)">국가 만들기</button>
-    <button class="active" onclick="showPage('person',event)">인물 만들기</button>
-    <button onclick="showPage('group',event)">단체 만들기</button>
+    <button id="navHome" class="active" onclick="showHome()">홈</button>
+    <button id="navNation" onclick="showPage('nation')">국가 만들기</button>
+    <button id="navPerson" onclick="showPage('person')">인물 만들기</button>
+    <button id="navGroup" onclick="showPage('group')">단체 만들기</button>
   </nav>
 </header>
-<main>
+
+<section class="home-screen" id="homeScreen">
+  <div class="hero-box">
+    <div class="hero-kicker">LCW ARCHIVE SYSTEM</div>
+    <h1 class="hero-title">HEARTWEAR<br>공식 위키 사이트</h1>
+    <div class="hero-actions">
+      <a href="https://heartwarelcw.vercel.app/" target="_blank" rel="noopener noreferrer">공식사이트 방문하기</a>
+    </div>
+  </div>
+</section>
+
+<main id="editorScreen" class="hidden">
   <section class="panel">
-    <h2 id="editorTitle">인물 만들기</h2>
-    <div id="homeBox" class="hidden">
-      <p>메뉴에서 만들 항목을 선택하면 위키식 설정표를 만들 수 있습니다.</p>
-    </div>
-    <div id="editorBox">
-      <div class="row">
-        <div class="field"><label>상단 이름</label><input id="titleKo" value="인물명" oninput="render()"></div>
-        <div class="field"><label>영문/부제</label><input id="titleEn" value="Character Name" oninput="render()"></div>
+    <h2 id="editorTitle">국가 만들기</h2>
+
+    <div class="row">
+      <div class="field">
+        <label>상단 이름</label>
+        <input id="titleKo" value="국가명" oninput="render()">
       </div>
-      <div class="row">
-        <div class="field"><label>상단 박스 색상</label><input type="color" id="boxColor" value="#111827" oninput="setBoxColor(this.value)"></div>
-        <div class="field"><label>대표 이미지</label><input type="file" accept="image/*" onchange="loadImage(event)"></div>
+      <div class="field">
+        <label>영문/부제</label>
+        <input id="titleEn" value="Nation Profile" oninput="render()">
       </div>
-      <div id="fields"></div>
-      <button class="btn" onclick="addField()">칸 추가</button>
-      <button class="btn secondary" onclick="addSection()">구분 제목 추가</button>
-      <button class="btn secondary" onclick="togglePrintMode()">스크린샷 모드</button>
-      <p class="small">스크린샷 모드에서는 오른쪽 위 버튼으로 다시 편집 화면으로 돌아올 수 있습니다. 저장은 브라우저 안에서만 됩니다.</p>
     </div>
+
+    <div class="row">
+      <div class="field">
+        <label>상단 박스 색상</label>
+        <input type="color" id="boxColor" value="#111827" oninput="setBoxColor(this.value)">
+      </div>
+      <div class="field">
+        <label>대표 이미지</label>
+        <input type="file" accept="image/*" onchange="loadImage(event)">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>이미지 비율</label>
+      <div class="image-options">
+        <button type="button" id="portraitBtn" class="active" onclick="setImageMode('portrait')">세로로 하기</button>
+        <button type="button" id="landscapeBtn" onclick="setImageMode('landscape')">가로로 하기</button>
+      </div>
+    </div>
+
+    <div id="fields"></div>
+
+    <button class="btn" onclick="addField()">칸 추가</button>
+    <button class="btn secondary" onclick="addSection()">구분 제목 추가</button>
+    <button class="btn secondary" onclick="togglePrintMode()">스크린샷 모드</button>
+    <p class="small">스크린샷 모드에서 📷 이미지 저장을 누르면 설정표만 PNG로 저장됩니다.</p>
   </section>
+
   <section class="preview" id="captureArea">
-    <div class="wiki-title"><div class="ko" id="pTitleKo"></div><div class="en" id="pTitleEn"></div></div>
-    <div class="image-box" id="pImage">IMAGE</div>
+    <div class="wiki-title">
+      <div class="ko" id="pTitleKo"></div>
+      <div class="en" id="pTitleEn"></div>
+    </div>
+    <div class="image-box portrait" id="pImage">IMAGE</div>
     <table><tbody id="previewTable"></tbody></table>
   </section>
 </main>
+
 <script>
-let type='person';
+let currentType='nation';
+
 const templates={
-  person:[['본명',''],['이명',''],['출생',''],['소속',''],['직위',''],['성격',''],['외형',''],['역사','']],
   nation:[
-    ['__section','국가 상징'],['국명',''],['영문명',''],['국기','이미지 칸에 국기를 넣거나 설명 작성'],['국장',''],['표어',''],['국가',''],
-    ['__section','기본 정보'],['수도',''],['최대도시',''],['위치',''],['면적',''],['인구',''],['공용어',''],['화폐',''],['국교',''],
-    ['__section','정치'],['정치체제',''],['국가원수',''],['정부수반',''],['입법부',''],['주요 정당',''],
-    ['__section','역사'],['건국',''],['주요 사건',''],['전쟁/분쟁',''],
-    ['__section','행정·군사·외교'],['행정구역',''],['군대',''],['동맹',''],['외교 관계','']
+    ['__section','국가 상징'],
+    ['국명',''],
+    ['영문명',''],
+    ['국기',''],
+    ['국장',''],
+    ['표어',''],
+    ['국가',''],
+
+    ['__section','기본 정보'],
+    ['수도',''],
+    ['최대도시',''],
+    ['위치',''],
+    ['면적',''],
+    ['인구',''],
+    ['공용어',''],
+    ['화폐',''],
+    ['국교',''],
+
+    ['__section','정치'],
+    ['정치체제',''],
+    ['국가원수',''],
+    ['정부수반',''],
+    ['입법부',''],
+    ['주요 정당',''],
+
+    ['__section','역사'],
+    ['건국',''],
+    ['주요 사건',''],
+    ['전쟁/분쟁',''],
+
+    ['__section','행정·군사·외교'],
+    ['행정구역',''],
+    ['군대',''],
+    ['동맹',''],
+    ['외교 관계','']
   ],
-  group:[['단체명',''],['성격',''],['창설',''],['수장',''],['본부',''],['목적',''],['역사','']]
+  person:[
+    ['본명',''],
+    ['이명',''],
+    ['출생',''],
+    ['출신지',''],
+    ['소속',''],
+    ['직위',''],
+    ['성격',''],
+    ['외형',''],
+    ['주요 행적',''],
+    ['역사','']
+  ],
+  group:[
+    ['단체명',''],
+    ['성격',''],
+    ['창설',''],
+    ['수장',''],
+    ['본부',''],
+    ['목적',''],
+    ['활동 지역',''],
+    ['역사','']
+  ]
 };
-function showPage(t,e){
-  document.querySelectorAll('.menu button').forEach(b=>b.classList.remove('active')); if(e) e.target.classList.add('active');
-  type=t; document.getElementById('homeBox').classList.toggle('hidden',t!=='home'); document.getElementById('editorBox').classList.toggle('hidden',t==='home');
-  const names={home:'홈',person:'인물 만들기',nation:'국가 만들기',group:'단체 만들기'}; document.getElementById('editorTitle').textContent=names[t];
-  if(t!=='home'){ document.getElementById('titleKo').value=t==='nation'?'대한민국식 국가 설정표':t==='group'?'단체명':'인물명'; document.getElementById('titleEn').value=t==='nation'?'Nation Profile':t==='group'?'Organization Name':'Character Name'; setFields(templates[t]); }
+
+const pageNames={
+  nation:'국가 만들기',
+  person:'인물 만들기',
+  group:'단체 만들기'
+};
+
+function showHome(){
+  document.getElementById('homeScreen').classList.remove('hidden');
+  document.getElementById('editorScreen').classList.add('hidden');
+  document.body.classList.remove('print-mode');
+  setActiveNav('navHome');
 }
-function setFields(arr){document.getElementById('fields').innerHTML=''; arr.forEach(x=>x[0]==='__section'?addSection(x[1]):addField(x[0],x[1])); render();}
-function addField(label='',value=''){
-  const wrap=document.createElement('div'); wrap.className='field item';
-  wrap.innerHTML=`<label>항목명 <button class="remove" onclick="this.closest('.item').remove();render()">삭제</button></label><input class="key" value="${escapeAttr(label)}" oninput="render()"><textarea class="val" oninput="render()">${escapeHtml(value)}</textarea>`;
-  document.getElementById('fields').appendChild(wrap); render();
+
+function showPage(type){
+  currentType=type;
+  document.getElementById('homeScreen').classList.add('hidden');
+  document.getElementById('editorScreen').classList.remove('hidden');
+  document.getElementById('editorTitle').textContent=pageNames[type];
+
+  setActiveNav(type==='nation'?'navNation':type==='person'?'navPerson':'navGroup');
+
+  document.getElementById('titleKo').value=type==='nation'?'국가명':type==='person'?'인물명':'단체명';
+  document.getElementById('titleEn').value=type==='nation'?'Nation Profile':type==='person'?'Character Profile':'Organization Profile';
+
+  setFields(templates[type]);
+  setImageMode('portrait');
+  render();
 }
-function addSection(label='구분'){
-  const wrap=document.createElement('div'); wrap.className='field item section-item'; wrap.dataset.section='true';
-  wrap.innerHTML=`<label>구분 제목 <button class="remove" onclick="this.closest('.item').remove();render()">삭제</button></label><input class="key" value="${escapeAttr(label)}" oninput="render()"><textarea class="val"></textarea>`;
-  document.getElementById('fields').appendChild(wrap); render();
+
+function setActiveNav(id){
+  document.querySelectorAll('.menu button').forEach(btn=>btn.classList.remove('active'));
+  const target=document.getElementById(id);
+  if(target) target.classList.add('active');
 }
+
+function setFields(arr){
+  document.getElementById('fields').innerHTML='';
+  arr.forEach(item=>{
+    if(item[0]==='__section') addSection(item[1], false);
+    else addField(item[0], item[1], false);
+  });
+  render();
+}
+
+function addField(label='', value='', doRender=true){
+  const wrap=document.createElement('div');
+  wrap.className='field item';
+  wrap.innerHTML=`
+    <label>항목명 <button class="remove" onclick="this.closest('.item').remove();render()">삭제</button></label>
+    <input class="key" value="${escapeAttr(label)}" oninput="render()">
+    <textarea class="val" oninput="render()">${escapeHtml(value)}</textarea>
+  `;
+  document.getElementById('fields').appendChild(wrap);
+  if(doRender) render();
+}
+
+function addSection(label='구분', doRender=true){
+  const wrap=document.createElement('div');
+  wrap.className='field item section-item';
+  wrap.dataset.section='true';
+  wrap.innerHTML=`
+    <label>구분 제목 <button class="remove" onclick="this.closest('.item').remove();render()">삭제</button></label>
+    <input class="key" value="${escapeAttr(label)}" oninput="render()">
+    <textarea class="val"></textarea>
+  `;
+  document.getElementById('fields').appendChild(wrap);
+  if(doRender) render();
+}
+
 function render(){
-  document.getElementById('pTitleKo').textContent=document.getElementById('titleKo').value||'제목';
-  document.getElementById('pTitleEn').textContent=document.getElementById('titleEn').value||'Subtitle';
-  const tbody=document.getElementById('previewTable'); tbody.innerHTML='';
-  document.querySelectorAll('.item').forEach(item=>{ const k=item.querySelector('.key').value||'항목'; const v=item.querySelector('.val').value||' '; if(item.dataset.section==='true'){tbody.innerHTML+=`<tr class="section-title"><td colspan="2">${escapeHtml(k)}</td></tr>`;} else {tbody.innerHTML+=`<tr><th>${escapeHtml(k)}</th><td>${escapeHtml(v)}</td></tr>`;} });
+  document.getElementById('pTitleKo').textContent=document.getElementById('titleKo').value || '제목';
+  document.getElementById('pTitleEn').textContent=document.getElementById('titleEn').value || 'Subtitle';
+
+  const tbody=document.getElementById('previewTable');
+  tbody.innerHTML='';
+
+  document.querySelectorAll('.item').forEach(item=>{
+    const key=item.querySelector('.key').value || '항목';
+    const val=item.querySelector('.val').value || ' ';
+    if(item.dataset.section==='true'){
+      tbody.innerHTML += `<tr class="section-title"><td colspan="2">${escapeHtml(key)}</td></tr>`;
+    }else{
+      tbody.innerHTML += `<tr><th>${escapeHtml(key)}</th><td>${escapeHtml(val)}</td></tr>`;
+    }
+  });
 }
-function loadImage(e){const file=e.target.files[0]; if(!file)return; const r=new FileReader(); r.onload=()=>{document.getElementById('pImage').innerHTML=`<img src="${r.result}">`;}; r.readAsDataURL(file);}
-function setBoxColor(v){document.documentElement.style.setProperty('--boxColor',v)}
-function togglePrintMode(){document.body.classList.toggle('print-mode');}
-function escapeHtml(s){return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
-function escapeAttr(s){return escapeHtml(s).replace(/`/g,'&#96;')}
-setFields(templates.person); render();
+
+function loadImage(e){
+  const file=e.target.files[0];
+  if(!file) return;
+  const reader=new FileReader();
+  reader.onload=()=>{
+    document.getElementById('pImage').innerHTML=`<img src="${reader.result}" alt="대표 이미지">`;
+  };
+  reader.readAsDataURL(file);
+}
+
+function setImageMode(mode){
+  const box=document.getElementById('pImage');
+  box.classList.remove('portrait','landscape');
+  box.classList.add(mode);
+
+  document.getElementById('portraitBtn').classList.toggle('active', mode==='portrait');
+  document.getElementById('landscapeBtn').classList.toggle('active', mode==='landscape');
+}
+
+function setBoxColor(value){
+  document.documentElement.style.setProperty('--boxColor', value);
+}
+
+function togglePrintMode(){
+  document.body.classList.toggle('print-mode');
+}
+
+async function saveAsImage(){
+  const target=document.getElementById('captureArea');
+  if(!target){
+    alert('저장할 영역을 찾지 못했습니다.');
+    return;
+  }
+
+  document.body.classList.add('capturing');
+  try{
+    const canvas=await html2canvas(target,{
+      scale:2,
+      backgroundColor:'#070707',
+      useCORS:true,
+      logging:false
+    });
+
+    const a=document.createElement('a');
+    const name=(document.getElementById('pTitleKo')?.textContent || 'HEARTWEAR_설정표')
+      .replace(/[\\/:*?"<>|\s]+/g,'_')
+      .slice(0,40);
+
+    a.download=name+'.png';
+    a.href=canvas.toDataURL('image/png');
+    a.click();
+  }catch(err){
+    console.error(err);
+    alert('이미지 저장 실패. 인터넷 연결 상태를 확인하거나 다시 시도해주세요.');
+  }finally{
+    document.body.classList.remove('capturing');
+  }
+}
+
+function escapeHtml(text){
+  return String(text).replace(/[&<>'"]/g, c=>({
+    '&':'&amp;',
+    '<':'&lt;',
+    '>':'&gt;',
+    "'":'&#39;',
+    '"':'&quot;'
+  }[c]));
+}
+function escapeAttr(text){
+  return escapeHtml(text).replace(/`/g,'&#96;');
+}
+
+showHome();
 </script>
 </body>
 </html>
