@@ -1,103 +1,1134 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>HΣΛTWΔRΞ Economic System</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HΣΛTWΔRΞ 설정 생성기</title>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <style>
-  :root{--bg:#050505;--panel:#0b0b0d;--panel2:#111115;--white:#f2f2f2;--muted:#9b9b9b;--red:#ff1e3c;--red2:#8b0016;--line:rgba(255,255,255,.14);--glow:0 0 18px rgba(255,30,60,.55),0 0 45px rgba(255,30,60,.16)}
-  *{box-sizing:border-box} html,body{margin:0;min-height:100%;background:var(--bg);color:var(--white);font-family:'Segoe UI',Pretendard,Apple SD Gothic Neo,sans-serif} body{overflow-x:hidden;background:radial-gradient(circle at 20% 0%,rgba(255,30,60,.16),transparent 28%),linear-gradient(135deg,#020202 0%,#08080a 45%,#120006 100%)}
-  body:before{content:"";position:fixed;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0,rgba(255,255,255,.035) 1px,transparent 1px,transparent 5px);mix-blend-mode:overlay;opacity:.28;z-index:20} body:after{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(255,30,60,.08),transparent);animation:scan 5s linear infinite;z-index:21}@keyframes scan{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
-  .gate{min-height:100vh;display:grid;place-items:center;padding:28px;transition:opacity .7s ease,filter .7s ease}.gate.hide{opacity:0;filter:blur(10px);pointer-events:none;position:absolute;inset:0}.gate-card{width:min(760px,100%);border:1px solid var(--red);background:linear-gradient(180deg,rgba(15,15,18,.94),rgba(3,3,4,.96));box-shadow:var(--glow);padding:34px;position:relative;overflow:hidden;clip-path:polygon(0 0,94% 0,100% 8%,100% 100%,6% 100%,0 92%)}.gate-card:before{content:"AUTHORIZATION NODE";position:absolute;top:12px;right:18px;color:rgba(255,255,255,.18);font-size:12px;letter-spacing:3px}.logo{font-size:clamp(38px,7vw,76px);font-weight:900;letter-spacing:4px;text-shadow:var(--glow);margin:10px 0 8px;line-height:1}.subtitle{color:var(--muted);letter-spacing:2px;margin-bottom:34px}.question{font-size:clamp(22px,3vw,34px);font-weight:800;line-height:1.38;margin:22px 0 30px;border-left:4px solid var(--red);padding-left:18px}.btns{display:flex;gap:14px;flex-wrap:wrap}
-  button{border:1px solid var(--red);background:linear-gradient(180deg,#26000a,#070707);color:var(--white);padding:13px 22px;font-weight:900;letter-spacing:1px;cursor:pointer;box-shadow:0 0 0 rgba(255,30,60,0);transition:.18s;clip-path:polygon(0 0,92% 0,100% 30%,100% 100%,8% 100%,0 70%)}button:hover{box-shadow:var(--glow);transform:translateY(-1px)}.ghost{border-color:rgba(255,255,255,.22);color:#aaa;background:#09090a}.app{display:none;min-height:100vh;padding:22px;opacity:0;transform:translateY(12px);transition:.7s ease}.app.show{display:block;opacity:1;transform:none}
-  header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px;border-bottom:1px solid var(--line);padding-bottom:16px}.title h1{margin:0;font-size:28px;letter-spacing:3px;text-shadow:var(--glow)}.title p{margin:6px 0 0;color:var(--muted);font-size:13px;letter-spacing:1px}.status{border:1px solid var(--red);padding:10px 14px;color:var(--red);font-size:12px;letter-spacing:2px;box-shadow:var(--glow)}
-  .grid{display:grid;grid-template-columns:390px 1fr;gap:18px;align-items:start}.panel{background:linear-gradient(180deg,rgba(17,17,21,.92),rgba(5,5,6,.95));border:1px solid var(--line);box-shadow:0 0 22px rgba(0,0,0,.5);padding:16px;position:relative;overflow:hidden}.panel:before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--red),transparent)}.panel h2{margin:0 0 14px;font-size:16px;letter-spacing:2px;color:#fff;text-transform:uppercase}
-  label{display:block;font-size:12px;color:#cfcfcf;margin:10px 0 5px;letter-spacing:.5px}input,select,textarea{width:100%;background:#070708;border:1px solid rgba(255,255,255,.18);color:#fff;padding:10px 11px;outline:none;font-size:14px}input:focus,select:focus,textarea:focus{border-color:var(--red);box-shadow:0 0 12px rgba(255,30,60,.25)}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:15px}.egg-actions{display:none;grid-template-columns:1fr;gap:10px;margin-top:10px}.egg-actions.show{display:grid}.egg-button{background:linear-gradient(180deg,#7a0014,#160004);border-color:#ff1e3c;box-shadow:0 0 22px rgba(255,30,60,.24);animation:pulseRed 1.4s infinite}.boom-button{background:linear-gradient(180deg,#fff,#660012);color:#050505;border-color:#fff;box-shadow:0 0 24px rgba(255,255,255,.25)}@keyframes pulseRed{0%,100%{filter:brightness(1)}50%{filter:brightness(1.35)}}
-  .tabbar{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}.tab-btn{clip-path:none;border-color:rgba(255,255,255,.18);background:#08080a;color:#aaa}.tab-btn.active{border-color:var(--red);background:linear-gradient(180deg,#2a000a,#08080a);color:#fff;box-shadow:var(--glow)}.tab-pane{display:none}.tab-pane.active{display:block}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}.card{border:1px solid var(--line);background:rgba(255,255,255,.035);padding:13px;min-height:82px}.card b{font-size:12px;color:var(--muted);display:block;margin-bottom:8px}.card span{font-size:22px;font-weight:900}.bad{color:var(--red)}.good{color:#fff}.chartbox{height:500px;margin-bottom:18px;border:1px solid rgba(255,30,60,.32);padding:12px;background:radial-gradient(circle at 50% 20%,rgba(255,30,60,.11),rgba(0,0,0,.34) 42%,rgba(0,0,0,.68));box-shadow:inset 0 0 22px rgba(255,30,60,.08),0 0 24px rgba(255,30,60,.10)}
-  .year-dashboard{display:grid;grid-template-columns:1.35fr 1fr;gap:14px;margin-bottom:18px}
-  .year-chartbox{height:280px;border:1px solid rgba(255,30,60,.28);padding:12px;background:radial-gradient(circle at 50% 15%,rgba(255,30,60,.10),rgba(0,0,0,.38) 48%,rgba(0,0,0,.72));box-shadow:inset 0 0 20px rgba(255,30,60,.06),0 0 18px rgba(255,30,60,.08)}
-  .year-chartbox.main{height:360px;grid-row:span 2}
-  .year-chartbox h3{margin:0 0 8px;font-size:12px;color:#ddd;letter-spacing:1.2px;text-transform:uppercase}
+:root{
+  --accent:#b3131b;
+  --accent2:#e11d24;
+  --boxColor:#111827;
+  --orgMain:#06456f;
+  --orgSub:#bfd0e3;
+  --orgText:#ffd400;
+  --orgBadge:#1f6fa7;
+  --orgBadgeText:#ffffff;
+  --orgNote:#f2f2f2;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:#070707;
+  color:#f5f5f5;
+  font-family:Arial,'Noto Sans KR',sans-serif;
+}
+header{
+  min-height:64px;
+  background:#0b0b0d;
+  border-bottom:2px solid var(--accent);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  padding:12px 22px;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+.logo{
+  font-weight:900;
+  font-size:22px;
+}
+.logo span{color:var(--accent2)}
+.menu{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+.menu button{
+  background:transparent;
+  color:#eee;
+  border:1px solid #333;
+  padding:10px 14px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:800;
+}
+.menu button:hover,.menu button.active{
+  background:var(--accent);
+  border-color:var(--accent2);
+}
+.hidden{display:none!important}
 
-  .focus-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:0 0 18px}.mini-metric{border:1px solid rgba(255,30,60,.22);background:rgba(255,255,255,.03);padding:10px;position:relative;overflow:hidden}.mini-metric b{display:flex;justify-content:space-between;gap:8px;font-size:11px;color:#bbb;margin-bottom:8px}.mini-bar{height:9px;background:#111;border:1px solid rgba(255,255,255,.12);overflow:hidden}.mini-fill{height:100%;width:50%;background:linear-gradient(90deg,#ff1e3c,#fff);box-shadow:0 0 12px rgba(255,30,60,.65);transform-origin:left}.mini-note{font-size:11px;color:#888;margin-top:6px}.report{white-space:pre-wrap;line-height:1.65;color:#ddd;background:#050506;border:1px solid var(--line);padding:14px;min-height:220px;font-family:Consolas,monospace;font-size:13px}.small{font-size:12px;color:var(--muted);line-height:1.5;margin-top:8px}.copyright-notice{margin-top:18px;padding:11px 13px;border:1px solid rgba(255,30,60,.34);background:rgba(255,30,60,.055);color:#e8e8e8;font-size:12px;line-height:1.6;letter-spacing:-.02em;text-shadow:0 0 8px rgba(255,30,60,.25)}.copyright-notice b{color:var(--red);font-weight:900}
-  .matrix{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}.matrix-card{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.025);padding:12px}.matrix-card b{display:block;color:var(--muted);font-size:11px;margin-bottom:6px}.matrix-card span{font-size:20px;font-weight:900}.history{max-height:180px;overflow:auto;border:1px solid var(--line);background:#050506;padding:10px;font-family:Consolas,monospace;font-size:12px;color:#ddd;line-height:1.65}
-  @media(max-width:980px){.grid{grid-template-columns:1fr}.cards{grid-template-columns:repeat(2,1fr)}.focus-strip,.matrix{grid-template-columns:repeat(2,1fr)}.year-dashboard{grid-template-columns:1fr}.year-chartbox.main{grid-row:auto}}@media(max-width:560px){header{display:block}.status{margin-top:12px}.row,.actions,.cards,.focus-strip,.matrix{grid-template-columns:1fr}.app{padding:12px}.gate-card{padding:24px}}
+/* HOME */
+.home-screen{
+  min-height:calc(100vh - 64px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:46px 20px;
+  background:
+    radial-gradient(circle at 22% 20%, rgba(225,29,36,.28), transparent 30%),
+    radial-gradient(circle at 78% 72%, rgba(255,255,255,.08), transparent 30%),
+    linear-gradient(135deg,#020202,#1a0506 60%,#000);
+}
+.hero-box{
+  width:min(920px,92vw);
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:28px;
+  background:rgba(5,5,5,.78);
+  padding:56px 44px;
+  box-shadow:0 0 50px rgba(179,19,27,.34), inset 0 0 34px rgba(255,255,255,.04);
+  position:relative;
+}
+.hero-box:before{
+  content:"";
+  position:absolute;
+  inset:12px;
+  border:1px solid rgba(225,29,36,.28);
+  border-radius:22px;
+  pointer-events:none;
+}
+.hero-kicker{
+  color:#ef4444;
+  font-weight:900;
+  letter-spacing:.25em;
+  font-size:13px;
+  margin-bottom:14px;
+}
+.hero-title{
+  margin:0 0 22px;
+  color:white;
+  font-size:clamp(36px,6vw,76px);
+  line-height:1.05;
+  font-weight:1000;
+  text-shadow:0 0 20px rgba(239,68,68,.42);
+}
+.hero-actions a{
+  position:relative;
+  z-index:3;
+  display:inline-block;
+  border:1px solid rgba(255,255,255,.24);
+  background:#b91c1c;
+  color:#fff;
+  border-radius:12px;
+  padding:14px 20px;
+  font-weight:900;
+  text-decoration:none;
+}
+
+/* COMMON EDITOR */
+.editor-screen,.org-screen{
+  display:grid;
+  grid-template-columns:330px minmax(360px,560px);
+  gap:20px;
+  padding:22px;
+  justify-content:center;
+}
+.panel,.preview,.org-preview{
+  background:#111;
+  border:1px solid #2a2a2a;
+  border-radius:14px;
+  box-shadow:0 0 30px rgba(155,17,30,.18);
+}
+.panel{padding:18px}
+.panel h2{
+  margin:0 0 16px;
+  border-left:5px solid var(--accent2);
+  padding-left:10px;
+}
+.field{margin-bottom:12px}
+.field label{
+  display:block;
+  font-size:13px;
+  color:#bbb;
+  margin-bottom:5px;
+  font-weight:800;
+}
+input,textarea{
+  width:100%;
+  background:#1b1b1b;
+  color:#fff;
+  border:1px solid #444;
+  border-radius:8px;
+  padding:9px;
+  font-size:14px;
+}
+input[type="color"]{height:42px;padding:4px}
+textarea{min-height:66px;resize:vertical}
+.row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.btn{
+  width:100%;
+  border:0;
+  background:var(--accent);
+  color:white;
+  border-radius:9px;
+  padding:11px;
+  margin-top:8px;
+  font-weight:900;
+  cursor:pointer;
+}
+.btn.secondary{
+  background:#272727;
+  border:1px solid #555;
+}
+.btn:hover{filter:brightness(1.12)}
+.small{
+  font-size:12px;
+  color:#aaa;
+  line-height:1.5;
+  margin-top:10px;
+}
+.remove{
+  float:right;
+  background:#222;
+  color:#fff;
+  border:1px solid #555;
+  border-radius:6px;
+  cursor:pointer;
+}
+.section-item textarea{display:none}
+.section-item input{
+  font-weight:900;
+  color:#ffd8d8;
+}
+.image-options{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+.image-options button{
+  padding:9px 10px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,.18);
+  background:#151515;
+  color:#fff;
+  cursor:pointer;
+  font-weight:800;
+}
+.image-options button.active{
+  background:#b91c1c;
+  border-color:#ef4444;
+}
+
+/* WIKI CARD */
+.preview{
+  padding:0;
+  overflow:hidden;
+  max-width:560px;
+}
+.wiki-title{
+  background:var(--boxColor);
+  border-bottom:2px solid var(--accent2);
+  text-align:center;
+  padding:12px;
+}
+.wiki-title .ko{
+  font-size:22px;
+  font-weight:900;
+}
+.wiki-title .en{
+  font-size:14px;
+  font-weight:800;
+  color:#ddd;
+  margin-top:3px;
+}
+.image-box{
+  background:#08080a;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#777;
+  font-weight:900;
+  font-size:20px;
+  border-bottom:1px solid #333;
+  overflow:hidden;
+}
+.image-box.portrait{height:560px}
+.image-box.landscape{height:320px}
+.image-box img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:center center;
+  background:#08080a;
+}
+.info-table{
+  width:100%;
+  border-collapse:collapse;
+  background:#f3f3f3;
+  color:#111;
+  font-size:14px;
+}
+.info-table th{
+  width:118px;
+  background:var(--boxColor);
+  color:white;
+  border:1px solid #cfcfcf;
+  padding:9px;
+  text-align:center;
+}
+.info-table td{
+  border:1px solid #cfcfcf;
+  padding:9px;
+  white-space:pre-wrap;
+}
+.section-title td{
+  background:#e9e9e9;
+  font-weight:900;
+  color:#9b111e;
+  text-align:center;
+  padding:8px;
+}
+
+/* GOVERNMENT ORG CHART */
+.org-screen{
+  grid-template-columns:340px minmax(680px,1040px);
+}
+.org-preview{
+  background:#fff;
+  color:#111;
+  overflow:hidden;
+  max-width:1040px;
+}
+.gov-chart{
+  width:100%;
+  background:#fff;
+  border:1px solid #d8d8d8;
+}
+.gov-top{
+  background:var(--orgMain);
+  color:#fff;
+  text-align:center;
+  padding:10px 10px 8px;
+}
+.gov-logo-line{
+  font-size:18px;
+  font-weight:900;
+  line-height:1.3;
+}
+.gov-logo-mark{
+  display:inline-flex;
+  width:24px;
+  height:24px;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:#fff;
+  color:var(--orgMain);
+  margin-right:6px;
+  font-size:15px;
+  vertical-align:middle;
+}
+.gov-main-title{
+  font-size:24px;
+  font-weight:1000;
+  margin-top:4px;
+}
+.gov-subtitle{
+  background:#fff;
+  color:#111;
+  text-align:center;
+  padding:8px;
+  font-weight:900;
+  border-bottom:1px solid #b9c6d3;
+  font-size:16px;
+}
+.org-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  border-top:1px solid #d8e1ea;
+}
+.org-cell{
+  border-right:1px solid #d8e1ea;
+  border-bottom:1px solid #d8e1ea;
+  min-width:0;
+}
+.org-cell.blank{background:var(--orgSub)}
+.org-name{
+  background:var(--orgMain);
+  color:var(--orgText);
+  text-align:center;
+  font-weight:1000;
+  padding:12px 6px;
+  min-height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  word-break:keep-all;
+}
+.org-sub{
+  background:var(--orgSub);
+  min-height:34px;
+  padding:7px 4px;
+  text-align:center;
+}
+.badge{
+  display:inline-block;
+  background:var(--orgBadge);
+  color:var(--orgBadgeText);
+  border-radius:4px;
+  padding:3px 6px;
+  margin:2px;
+  font-size:12px;
+  line-height:1.15;
+  font-weight:900;
+  word-break:keep-all;
+}
+.org-note{
+  text-align:center;
+  background:var(--orgNote);
+  padding:12px;
+  font-size:13px;
+  line-height:1.5;
+  white-space:pre-wrap;
+}
+.org-legend-title{
+  background:var(--orgMain);
+  color:#fff;
+  text-align:center;
+  padding:8px;
+  font-weight:900;
+  font-size:13px;
+}
+.org-legend{
+  background:#fff;
+  text-align:center;
+  padding:8px;
+}
+.legend-badge{
+  display:inline-block;
+  border:1px solid #1f2937;
+  background:#fff;
+  color:#111;
+  border-radius:3px;
+  padding:4px 7px;
+  margin:3px;
+  font-size:12px;
+  font-weight:900;
+}
+.legend-badge.blue{
+  background:var(--orgMain);
+  color:var(--orgText);
+}
+.legend-badge.navy{
+  background:var(--orgMain);
+  color:#fff;
+}
+.org-controls-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+.org-item{
+  border:1px solid #333;
+  border-radius:10px;
+  padding:10px;
+  background:#171717;
+  margin-bottom:10px;
+}
+.org-item label{margin-top:6px}
+.org-item .remove{
+  float:none;
+  width:100%;
+  margin-top:8px;
+  padding:7px;
+}
+
+/* SCREENSHOT MODE */
+.exit-print,.save-image{
+  display:none;
+  position:fixed;
+  top:14px;
+  z-index:9999;
+  color:#fff;
+  border:1px solid #fff;
+  border-radius:10px;
+  padding:10px 14px;
+  font-weight:900;
+  cursor:pointer;
+}
+.exit-print{right:14px;background:#b3131b}
+.save-image{right:168px;background:#111}
+.print-mode .exit-print,.print-mode .save-image{display:block}
+.print-mode header,.print-mode .panel{display:none}
+.print-mode .editor-screen:not(.hidden),
+.print-mode .org-screen:not(.hidden){
+  display:block;
+  padding:0;
+}
+.print-mode .preview,.print-mode .org-preview{
+  border-radius:0;
+  box-shadow:none;
+  border:0;
+  margin:0 auto;
+}
+.capturing .exit-print,.capturing .save-image{display:none!important}
+
+@media(max-width:850px){
+  header{align-items:flex-start;flex-direction:column}
+  .menu{width:100%;overflow:auto}
+  .menu button{white-space:nowrap}
+  .editor-screen,.org-screen{grid-template-columns:1fr;padding:14px}
+  .preview,.org-preview{max-width:none}
+  .org-grid{grid-template-columns:repeat(2,1fr)}
+}
+
+.legend-item{
+  border:1px solid #333;
+  border-radius:10px;
+  padding:10px;
+  background:#171717;
+  margin-bottom:10px;
+}
+.legend-grid{
+  display:grid;
+  grid-template-columns:44px 1fr;
+  gap:8px;
+}
+.legend-colors{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+.legend-item .remove{
+  float:none;
+  width:100%;
+  margin-top:8px;
+  padding:7px;
+}
+
+
+/* ===== FINAL ORG ALIGN FIX ===== */
+.org-grid{
+  align-items:stretch;
+}
+.org-cell{
+  display:grid;
+  grid-template-rows:50px 42px;
+  min-height:92px;
+}
+.org-name{
+  min-height:50px!important;
+  height:50px!important;
+  padding:8px 6px!important;
+}
+.org-sub{
+  min-height:42px!important;
+  height:42px!important;
+  padding:6px 4px!important;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+.org-cell.blank .org-name,
+.org-cell.blank .org-sub{
+  background:var(--orgSub);
+}
+.badge{
+  max-width:100%;
+  white-space:nowrap;
+}
+
+
+
+/* ===== ORG TOP FLAG RECTANGLE FIX ===== */
+.gov-logo-line{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+}
+.gov-logo-mark{
+  display:inline-flex!important;
+  width:64px!important;
+  height:36px!important;
+  border-radius:0!important;
+  border:none!important;
+  background:transparent!important;
+  color:var(--orgMain)!important;
+  overflow:hidden!important;
+  align-items:center!important;
+  justify-content:center!important;
+  margin-right:0!important;
+  font-size:12px!important;
+  flex:0 0 auto!important;
+  vertical-align:middle!important;
+}
+.gov-logo-mark img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+  display:block!important;
+  background:transparent!important;
+}
+
 </style>
 </head>
 <body>
-<section class="gate" id="gate"><div class="gate-card"><div class="logo">HΣΛTWΔRΞ</div><div class="subtitle">ADMINISTRATOR ECONOMIC INTERFACE / CLOSED ACCESS</div><div class="question">HΣΛTWΔRΞ 경제시스템 접근권한을 활성화 하시겠습니까?</div><div class="btns"><button onclick="enterSystem()">네</button><button class="ghost" onclick="denyAccess()">아니오</button></div><div class="small" id="gateText">권한 활성화 대기중 · 경제 자동판독 모듈 비활성화</div><div class="copyright-notice">해당 사이트의 모든 기술의 저작권은 <b>HΣΛTWΔRΞ 제작진</b>에게 있습니다. 이를 무단 전재, 배포할 경우 법적 책임을 물을 수 있습니다.</div></div></section>
-<main class="app" id="app"><header><div class="title"><h1>HΣΛTWΔRΞ ECONOMIC CONTROL</h1><p>관리자용 국가경제 자동판독기 · EVENT/YEAR 통합 경제운영 모듈</p></div><div class="status">ACCESS GRANTED</div></header>
-<div class="grid">
-<section class="panel"><h2>국가 경제 설정</h2><div class="row"><div><label>국가명</label><input id="country" value="헤도네스란트 제국연방"></div><div><label>현재년도</label><input id="year" type="number" value="2600"></div></div><label>경제체제</label><input id="system" value="국민자유주의적 시장경제"><div class="row"><div><label>실질 전체 GDP</label><input id="gdp" type="number" value="82000"></div><div><label>1인당 GDP</label><input id="gdpPc" type="number" value="56000"></div></div><div class="row"><div><label>국부</label><input id="wealth" type="number" value="410000"></div><div><label>실질 GNI</label><input id="gni" type="number" value="79000"></div></div><div class="row"><div><label>소비자물가지수 변동률 %</label><input id="inflation" type="number" value="2.4" step="0.1"></div><div><label>토지·주택가 변동률 %</label><input id="housing" type="number" value="3.1" step="0.1"></div></div><div class="row"><div><label>실업률 %</label><input id="unemp" type="number" value="4.2" step="0.1"></div><div><label>GDP 대비 부채율 %</label><input id="debt" type="number" value="48" step="0.1"></div></div><div class="row"><div><label>지니 계수</label><input id="gini" type="number" value="0.31" step="0.01"></div><div><label>국가신용등급</label><select id="rating"><option>AAA</option><option>AA+</option><option selected>AA</option><option>AA-</option><option>A+</option><option>A</option><option>A-</option><option>BBB+</option><option>BBB</option><option>BBB-</option><option>BB</option><option>B</option><option>CCC</option></select></div></div><label>공식화폐 / 화폐가치</label><input id="currency" value="헤도네스 크라운 / 1 HC = 1.18 USD"><label>주요 대형 은행</label><input id="banks" value="로믈란스 중앙은행, 제국상업은행, 하트웨어 신탁은행"><label>주요 대기업</label><input id="corps" value="HΣΛTWΔRΞ Heavy Industries, Venus Dynamics, Redline Energy"><label>국가주요산업</label><input id="industry" value="군수, 금융, 반도체, 우주항만, 중공업"></section>
-<section>
-<div class="tabbar"><button class="tab-btn active" id="eventTabBtn" onclick="switchTab('event')">EVENT</button><button class="tab-btn" id="yearTabBtn" onclick="switchTab('year')">YEAR</button></div>
-<div class="tab-pane active" id="eventPane">
-<section class="panel" style="margin-bottom:18px"><h2>EVENT / 사건 판정 입력</h2><div class="row"><div><label>사건명</label><input id="eventName" value="대륙권 금융시장 동시 붕괴"></div><div><label>사건유형</label><select id="eventType"><option value="finance">금융위기</option><option value="war">전쟁/군사</option><option value="industry">산업호황</option><option value="tech">기술혁신</option><option value="realestate">부동산</option><option value="welfare">복지/분배</option><option value="resource">자원위기</option></select></div></div><div class="row"><div><label>사건강도 -10 ~ +10</label><input id="impact" type="number" min="-10" max="10" value="-6" oninput="refreshEasterEggButtons()"><div class="small">±1~3: 소규모 · ±4~7: 현실적 대형사건 · ±8~9: 역사급 · -10/+10: 이스터에그 버튼 출현</div></div><div><label>예측기간</label><input id="period" type="number" min="1" max="15" value="5"></div></div><div class="row"><div><label>경제회복력</label><select id="resilience"><option value="0.72">낮음</option><option value="0.50" selected>보통</option><option value="0.32">높음</option></select></div><div><label>무작위성</label><select id="randomness"><option value="0.03">낮음</option><option value="0.07" selected>보통</option><option value="0.13">높음</option></select></div></div><div class="row"><div><label>그래프 반응성</label><select id="sensitivity"><option value="0.85">절제</option><option value="1.00" selected>표준</option><option value="1.25">강조</option></select></div><div><label>충격 전파방식</label><select id="shockShape"><option value="front" selected>초기충격형</option><option value="slow">지속누적형</option><option value="wave">불안정파동형</option></select></div></div><div class="actions"><button onclick="simulate()">경제판독 실행</button><button class="ghost" onclick="copyReport('report')">보고서 복사</button></div><div class="egg-actions" id="zionBox"><button class="egg-button" onclick="simulate('zion')">[시온이 행동]</button></div><div class="egg-actions" id="yeonjaeBox"><button class="boom-button" onclick="simulate('yeonjae')">[연재의 우월성]</button></div></section>
-<div class="cards"><div class="card"><b>경제 안정도</b><span id="stableScore">--</span></div><div class="card"><b>최종 GDP 지수</b><span id="gdpScore">--</span></div><div class="card"><b>최종 실업률</b><span id="unempScore">--</span></div><div class="card"><b>신용등급 변화</b><span id="ratingScore">--</span></div></div><section class="panel"><h2>주요 경제충격 그래프 <span style="font-size:11px;color:#999;letter-spacing:0">GDP 중심 · 기준선 100</span></h2><div class="chartbox"><canvas id="eventChart"></canvas></div><div class="focus-strip" id="focusStrip"></div><h2>자동판독 보고서</h2><div class="report" id="report">경제판독 실행 대기중...</div></section>
-</div>
-<div class="tab-pane" id="yearPane">
-<section class="panel" style="margin-bottom:18px"><h2>YEAR / 연간 경제성장 갱신</h2><div class="row"><div><label>기준 성장률 %</label><input id="baseGrowth" type="number" value="3.2" step="0.1"><div class="small">세계관 내 일반적인 잠재성장률. 선진국은 1~3%, 개척국/전후복구국은 4~8%도 가능.</div></div><div><label>인구증가율 %</label><input id="popGrowth" type="number" value="0.7" step="0.1"><div class="small">1인당 GDP 계산에 반영됨.</div></div></div><div class="row"><div><label>기술발전도 0~10</label><input id="techLevel" type="number" min="0" max="10" value="6" step="0.1"></div><div><label>산업경쟁력 0~10</label><input id="industryPower" type="number" min="0" max="10" value="7" step="0.1"></div></div><div class="row"><div><label>정부효율성 0~10</label><input id="govEff" type="number" min="0" max="10" value="7" step="0.1"></div><div><label>외부무역환경 -5~+5</label><input id="tradeEnv" type="number" min="-5" max="5" value="1" step="0.1"></div></div><div class="row"><div><label>전후복구/개척 보정 %</label><input id="rebuildBonus" type="number" value="0.8" step="0.1"></div><div><label>연간 변동성</label><select id="yearRandom"><option value="0.15">낮음</option><option value="0.35" selected>보통</option><option value="0.75">높음</option></select></div></div><div class="actions"><button onclick="advanceYear()">다음 회계연도 진행</button><button class="ghost" onclick="copyReport('yearReport')">YEAR 보고서 복사</button></div><div class="small">버튼을 누르면 현재 경제설정 입력값 자체가 다음 연도 값으로 갱신됩니다.</div></section>
-<div class="cards"><div class="card"><b>올해 실질 성장률</b><span id="yearGrowthScore">--</span></div><div class="card"><b>갱신 GDP</b><span id="yearGdpScore">--</span></div><div class="card"><b>1인당 GDP</b><span id="yearPcScore">--</span></div><div class="card"><b>경제 국면</b><span id="yearPhaseScore">--</span></div></div>
-<section class="panel"><h2>연간 성장 보고서 <span style="font-size:11px;color:#999;letter-spacing:0">GDP 총량 · 성장률 · 물가/고용/부채 동시 판독</span></h2><div class="year-dashboard"><div class="year-chartbox main"><h3>실질 GDP 총량 추이</h3><canvas id="yearGdpChart"></canvas></div><div class="year-chartbox"><h3>연도별 실질 성장률</h3><canvas id="yearGrowthChart"></canvas></div><div class="year-chartbox"><h3>고용·물가 동향</h3><canvas id="yearLaborChart"></canvas></div><div class="year-chartbox"><h3>재정·국부 지표</h3><canvas id="yearFiscalChart"></canvas></div></div><div class="matrix" id="yearMatrix"></div><h2>복붙용 YEAR 보고서</h2><div class="report" id="yearReport">YEAR 탭에서 [다음 회계연도 진행]을 누르면 연간 경제성장 보고서가 생성됩니다.</div><h2 style="margin-top:16px">성장 기록 로그</h2><div class="history" id="yearHistory">기록 없음</div></section>
-</div>
+<button class="exit-print" onclick="togglePrintMode()">← 편집으로 돌아가기</button>
+<button class="save-image" onclick="saveAsImage()">📷 이미지 저장</button>
+
+<header>
+  <div class="logo"><span>HΣΛTWΔRΞ</span> 설정 생성기</div>
+  <nav class="menu">
+    <button id="navHome" class="active" onclick="showHome()">홈</button>
+    <button id="navNation" onclick="showPage('nation')">국가 만들기</button>
+    <button id="navPerson" onclick="showPage('person')">인물 만들기</button>
+    <button id="navGroup" onclick="showPage('group')">단체 만들기</button>
+    <button id="navOrg" onclick="showOrgChart()">조직도 만들기</button>
+  </nav>
+</header>
+
+<section class="home-screen" id="homeScreen">
+  <div class="hero-box">
+    <div class="hero-kicker">LCW ARCHIVE SYSTEM</div>
+    <h1 class="hero-title">HΣΛTWΔRΞ<br>공식 위키 사이트</h1>
+    <div class="hero-actions">
+      <a href="https://heartwarelcw.vercel.app/" target="_blank" rel="noopener noreferrer">공식사이트 방문하기</a>
+    </div>
+  </div>
 </section>
-</div></main>
+
+<main id="editorScreen" class="editor-screen hidden">
+  <section class="panel">
+    <h2 id="editorTitle">국가 만들기</h2>
+
+    <div class="row">
+      <div class="field">
+        <label>상단 이름</label>
+        <input id="titleKo" value="국가명" oninput="render()">
+      </div>
+      <div class="field">
+        <label>영문/부제</label>
+        <input id="titleEn" value="Nation Profile" oninput="render()">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label>상단 박스 색상</label>
+        <input type="color" id="boxColor" value="#111827" oninput="setBoxColor(this.value)">
+      </div>
+      <div class="field">
+        <label>대표 이미지</label>
+        <input type="file" accept="image/*" onchange="loadImage(event)">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>이미지 비율</label>
+      <div class="image-options">
+        <button type="button" id="portraitBtn" class="active" onclick="setImageMode('portrait')">세로로 하기</button>
+        <button type="button" id="landscapeBtn" onclick="setImageMode('landscape')">가로로 하기</button>
+      </div>
+    </div>
+
+    <div id="fields"></div>
+
+    <button class="btn" onclick="addField()">칸 추가</button>
+    <button class="btn secondary" onclick="addSection()">구분 제목 추가</button>
+    <button class="btn secondary" onclick="togglePrintMode()">스크린샷 모드</button>
+    <p class="small">스크린샷 모드에서 📷 이미지 저장을 누르면 설정표만 PNG로 저장됩니다.</p>
+  </section>
+
+  <section class="preview" id="captureArea">
+    <div class="wiki-title">
+      <div class="ko" id="pTitleKo"></div>
+      <div class="en" id="pTitleEn"></div>
+    </div>
+    <div class="image-box portrait" id="pImage">IMAGE</div>
+    <table class="info-table"><tbody id="previewTable"></tbody></table>
+  </section>
+</main>
+
+<section class="org-screen hidden" id="orgScreen">
+  <section class="panel">
+    <h2>조직도 만들기</h2>
+
+    <div class="field">
+      <label>상단 소속명</label>
+      <input id="orgTopName" value="HΣΛTWΔRΞ 정부" oninput="renderOrgChart()">
+    </div>
+
+    <div class="field">
+      <label>상단 작은 국기/상징 이미지</label>
+      <input type="file" accept="image/*" onchange="loadOrgLogo(event)">
+    </div>
+
+    <div class="field">
+      <label>큰 제목</label>
+      <input id="orgMainTitle" value="행정각부" oninput="renderOrgChart()">
+    </div>
+
+    <div class="field">
+      <label>부제</label>
+      <input id="orgSubtitle" value="19부 18청 + [ 펼치기 · 접기 ]" oninput="renderOrgChart()">
+    </div>
+
+    <div class="field">
+      <label>하단 설명</label>
+      <textarea id="orgNote" oninput="renderOrgChart()">*19부 19청 예정
+참자: 신설 예정, 폐지 예정</textarea>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label>상단/기관 칸 색상</label>
+        <input type="color" id="orgMainColor" value="#06456f" oninput="setOrgColors()">
+      </div>
+      <div class="field">
+        <label>기관 글씨 색상</label>
+        <input type="color" id="orgTextColor" value="#ffd400" oninput="setOrgColors()">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label>하위기관 칸 색상</label>
+        <input type="color" id="orgSubColor" value="#bfd0e3" oninput="setOrgColors()">
+      </div>
+      <div class="field">
+        <label>하위기관 배지 색상</label>
+        <input type="color" id="orgBadgeColor" value="#1f6fa7" oninput="setOrgColors()">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>하단 설명 칸 색상</label>
+      <input type="color" id="orgNoteColor" value="#f2f2f2" oninput="setOrgColors()">
+    </div>
+
+    <h3 style="margin:18px 0 10px;border-left:4px solid var(--accent2);padding-left:8px">기관 편집</h3>
+    <div class="org-controls-row">
+      <button class="btn" onclick="addOrgCell()">기관 칸 추가</button>
+      <button class="btn secondary" onclick="addBlankOrgCell()">빈칸 추가</button>
+    </div>
+    <button class="btn secondary" onclick="removeLastOrgCell()">마지막 칸 삭제</button>
+    <button class="btn secondary" onclick="togglePrintMode()">스크린샷 모드</button>
+
+    <p class="small">하위기관은 쉼표로 구분하면 작은 파란 배지로 표시됩니다.</p>
+
+    <div id="orgFields"></div>
+
+<h3 style="margin:18px 0 10px;border-left:4px solid var(--accent2);padding-left:8px">범례 편집</h3>
+    <div id="legendFields"></div>
+    <button class="btn secondary" onclick="addLegendItem()">범례 추가</button>
+    <button class="btn secondary" onclick="removeLastLegendItem()">마지막 범례 삭제</button>
+
+    
+  </section>
+
+  <section class="org-preview" id="orgCaptureArea">
+    <div class="gov-chart">
+      <div class="gov-top">
+        <div class="gov-logo-line"><span class="gov-logo-mark" id="orgLogoMark">◉</span><span id="orgPreviewTopName">HΣΛTWΔRΞ 정부</span></div>
+        <div class="gov-main-title" id="orgPreviewMainTitle">행정각부</div>
+      </div>
+      <div class="gov-subtitle" id="orgPreviewSubtitle">19부 18청 + [ 펼치기 · 접기 ]</div>
+      <div class="org-grid" id="orgGrid"></div>
+      <div class="org-note" id="orgPreviewNote"></div>
+      <div class="org-legend-title">중앙행정기관 상급 기관장 · 중앙행정기관 하급 기관장</div>
+      <div class="org-legend" id="orgLegend"></div>
+    </div>
+  </section>
+</section>
+
 <script>
-let eventChartObj; let yearChartObjs={}; let yearHistory=[]; const ratingOrder=['AAA','AA+','AA','AA-','A+','A','A-','BBB+','BBB','BBB-','BB','B','CCC'];
-function enterSystem(){document.getElementById('gateText').textContent='권한 활성화 완료 · 조정화면으로 전환중';setTimeout(()=>{document.getElementById('gate').classList.add('hide');const app=document.getElementById('app');app.style.display='block';setTimeout(()=>app.classList.add('show'),50);refreshEasterEggButtons();simulate();},650)}
-function denyAccess(){document.getElementById('gateText').textContent='접근 거부됨 · 관리자 권한이 필요합니다'}
-function switchTab(tab){document.getElementById('eventPane').classList.toggle('active',tab==='event');document.getElementById('yearPane').classList.toggle('active',tab==='year');document.getElementById('eventTabBtn').classList.toggle('active',tab==='event');document.getElementById('yearTabBtn').classList.toggle('active',tab==='year');setTimeout(()=>{if(tab==='year'&&yearHistory.length) renderYearChart();},80)}
-function val(id){return parseFloat(document.getElementById(id).value)||0} function txt(id){return document.getElementById(id).value} function setVal(id,v,fix=1){document.getElementById(id).value=Number(v).toFixed(fix)} function clamp(n,a,b){return Math.max(a,Math.min(b,n))} function rnd(scale){return 1+(Math.random()*2-1)*scale}
-function fmt(n){return Number(n).toLocaleString('ko-KR',{maximumFractionDigits:1})} function phase(g){if(g>=7)return'과열성 고성장'; if(g>=4)return'확장 국면'; if(g>=1.5)return'안정 성장'; if(g>=0)return'저성장'; if(g>=-2)return'경기후퇴'; return'침체/위기'}
-function severityScale(impact){const a=Math.abs(impact);if(a===0)return 0;if(a<=3)return a*.95;if(a<=7)return 2.85+Math.pow(a-3,1.18)*1.75;if(a<=9)return 8.8+Math.pow(a-7,1.35)*3.1;return 13.0}
-function severityLabel(impact){const a=Math.abs(impact),dir=impact<0?'악재':'호재';if(a===0)return'무변동';if(a<=2)return`약한 ${dir}`;if(a<=4)return`관리 가능한 ${dir}`;if(a<=7)return`현실적 대형 ${dir}`;if(a<=9)return`역사적 초대형 ${dir}`;return impact<0?'국가붕괴급 악재':'개떡상급 초호재'}
-function ratingShift(base,impact,type){let idx=ratingOrder.indexOf(base);let penalty=0;const a=Math.abs(impact);if(impact<0){penalty=a<=3?1:a<=5?2:a<=7?3:a<=9?5:8}if(type==='finance'||type==='war')penalty+=impact<0?1:0;if(impact>0){penalty=-(a<=4?1:a<=7?2:a<=9?3:5)}return ratingOrder[clamp(idx+penalty,0,ratingOrder.length-1)]}
-function typeWeights(type){return{finance:{gdp:1.05,unemp:1,infl:.55,debt:.8,wealth:1.1,housing:.85,gini:.35},war:{gdp:.95,unemp:.8,infl:1.05,debt:1.35,wealth:.75,housing:.45,gini:.25},industry:{gdp:1.2,unemp:.75,infl:.25,debt:-.25,wealth:.9,housing:.45,gini:.1},tech:{gdp:1.35,unemp:.45,infl:-.15,debt:-.3,wealth:1,housing:.25,gini:.2},realestate:{gdp:.5,unemp:.25,infl:.4,debt:.65,wealth:.9,housing:1.5,gini:.45},welfare:{gdp:.35,unemp:-.3,infl:.25,debt:.8,wealth:.25,housing:.1,gini:-1.2},resource:{gdp:.9,unemp:.65,infl:1.4,debt:.55,wealth:.5,housing:.3,gini:.25}}[type]}
-function refreshEasterEggButtons(){const impact=clamp(val('impact'),-10,10);document.getElementById('zionBox').classList.toggle('show',impact<=-10);document.getElementById('yeonjaeBox').classList.toggle('show',impact>=10)}
-function simulate(mode='normal'){refreshEasterEggButtons();const start=val('year'),period=clamp(val('period'),1,15),impact=clamp(val('impact'),-10,10),decay=parseFloat(txt('resilience')),random=parseFloat(txt('randomness')),type=txt('eventType'),w=typeWeights(type),sensitivity=parseFloat(txt('sensitivity')),shockShape=txt('shockShape'),sign=impact<0?-1:impact>0?1:0,power=severityScale(impact)*sign*sensitivity;let gdp=100,wealth=100,unemp=val('unemp'),infl=val('inflation'),debt=val('debt'),housing=val('housing'),gini=val('gini');const data=[];for(let i=0;i<=period;i++){if(i>0){let spread=Math.pow(decay,i-1);if(shockShape==='slow')spread=(.58+Math.min(i,4)*.17)*Math.pow(decay,Math.max(0,i-2));if(shockShape==='wave')spread=Math.pow(decay,i-1)*(1+Math.sin(i*1.55)*.38);const shock=power*spread,recovery=(impact<0?Math.max(0,i-2)*Math.abs(power)*.055:-Math.max(0,i-3)*Math.abs(power)*.028);gdp+=(shock*w.gdp*(impact<0&&Math.abs(impact)>=10?1.18:impact<0&&Math.abs(impact)>=8?1.32:1.18)+recovery)*rnd(random);wealth+=(shock*w.wealth*(impact<0&&Math.abs(impact)>=10?1.05:impact<0&&Math.abs(impact)>=8?1.12:.92)+recovery*.62)*rnd(random);unemp+=(-shock*w.unemp*(impact<0&&Math.abs(impact)>=10?.48:impact<0&&Math.abs(impact)>=8?.52:.38))*rnd(random);infl+=(shock*w.infl*(impact<0&&Math.abs(impact)>=10?.30:impact<0&&Math.abs(impact)>=8?.31:.22))*rnd(random);debt+=(-shock*w.debt*(impact<0&&Math.abs(impact)>=10?1.25:impact<0&&Math.abs(impact)>=8?1.38:1.08))*rnd(random);housing+=(shock*w.housing*.38)*rnd(random);gini+=(-shock*w.gini*.008)*rnd(random);if(mode==='zion'&&impact<=-9.5){const c=i/period;unemp=Math.max(unemp,val('unemp')+12+24*c);debt=Math.max(debt,val('debt')+45+115*c);infl=Math.max(infl,val('inflation')+12+58*c);gdp=Math.min(gdp,100-45*Math.min(1,i/2)-22*c);wealth=Math.min(wealth,100-36*Math.min(1,i/2)-20*c)}if(mode==='yeonjae'&&impact>=9.5){const b=i/period;gdp=Math.max(gdp,100+30*b+30*Math.min(1,i/3));wealth=Math.max(wealth,100+25*b+24*Math.min(1,i/3));unemp=Math.min(unemp,Math.max(.8,val('unemp')-1.5-2.5*b));debt=Math.max(0,Math.min(debt,val('debt')-10-25*b))}}data.push({year:String(start+i),gdp:+clamp(gdp,8,220).toFixed(1),wealth:+clamp(wealth,8,220).toFixed(1),unemp:+clamp(unemp,0,60).toFixed(1),infl:+clamp(infl,-35,120).toFixed(1),debt:+clamp(debt,0,500).toFixed(1),housing:+clamp(housing,-75,140).toFixed(1),gini:+clamp(gini,.15,.75).toFixed(3),impactPower:+power.toFixed(2)})}const final=data[data.length-1],stability=clamp(Math.round(100-Math.abs(100-final.gdp)*1.55-final.unemp*2.15-Math.max(0,final.debt-60)*.55-Math.abs(final.infl-2)*2.25),0,100),newRating=ratingShift(txt('rating'),impact,type);document.getElementById('stableScore').textContent=stability+'/100';document.getElementById('gdpScore').textContent=final.gdp;document.getElementById('unempScore').textContent=final.unemp+'%';document.getElementById('ratingScore').textContent=txt('rating')+' → '+newRating;renderEventChart(data);renderEventReport(data,stability,newRating,mode)}
-function renderEventChart(data){const ctx=document.getElementById('eventChart').getContext('2d');if(eventChartObj)eventChartObj.destroy();const gdpSeries=data.map(d=>d.gdp),minG=Math.min(...gdpSeries,100),maxG=Math.max(...gdpSeries,100),range=Math.max(8,maxG-minG),yMin=Math.max(0,Math.floor((minG-range*.38)/5)*5),yMax=Math.ceil((maxG+range*.38)/5)*5,below=data[data.length-1].gdp<100;const grad=ctx.createLinearGradient(0,0,0,500);grad.addColorStop(0,below?'rgba(255,30,60,.08)':'rgba(255,255,255,.18)');grad.addColorStop(.48,below?'rgba(255,30,60,.34)':'rgba(255,255,255,.08)');grad.addColorStop(1,'rgba(255,30,60,.03)');const basePlugin={id:'baseLine',beforeDraw(c){const{ctx,chartArea,scales}=c;if(!chartArea)return;ctx.save();const y=scales.y.getPixelForValue(100);ctx.strokeStyle='rgba(255,255,255,.8)';ctx.lineWidth=2;ctx.setLineDash([9,7]);ctx.beginPath();ctx.moveTo(chartArea.left,y);ctx.lineTo(chartArea.right,y);ctx.stroke();ctx.restore()}};eventChartObj=new Chart(ctx,{type:'line',data:{labels:data.map(d=>d.year),datasets:[{label:'GDP 충격지수',data:gdpSeries,borderColor:'#ff1e3c',backgroundColor:grad,borderWidth:6,tension:.28,pointRadius:5,fill:{target:{value:100}}}]},plugins:[basePlugin],options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#eee',font:{weight:'900'}},grid:{color:'rgba(255,255,255,.07)'}},y:{min:yMin,max:yMax,ticks:{color:'#eee'},grid:{color:'rgba(255,30,60,.12)'}}}}});renderFocusStrip(data)}
-function renderFocusStrip(data){const first=data[0],last=data[data.length-1];const items=[['GDP',last.gdp-100,'최종 성장/침체'],['국부',last.wealth-100,'자산 축적 변화'],['실업률',-(last.unemp-first.unemp)*6,`${first.unemp}% → ${last.unemp}%`],['부채율',-(last.debt-first.debt)*1.4,`${first.debt}% → ${last.debt}%`],['물가',-Math.abs(last.infl-first.infl)*5,`${first.infl}% → ${last.infl}%`]];document.getElementById('focusStrip').innerHTML=items.map(([name,delta,note])=>{const good=delta>=0,width=clamp(Math.abs(delta)*2.8,8,100),sign=delta>0?'+':'';return`<div class="mini-metric"><b><span>${name}</span><span style="color:${good?'#fff':'#ff1e3c'}">${sign}${delta.toFixed(1)}</span></b><div class="mini-bar"><div class="mini-fill" style="width:${width}%;${good?'filter:grayscale(.35) brightness(1.4)':'background:linear-gradient(90deg,#4b000c,#ff1e3c);'}"></div></div><div class="mini-note">${note}</div></div>`}).join('')}
-function renderEventReport(data,stability,newRating,mode='normal'){const first=data[0],last=data[data.length-1],impact=val('impact');const tone=stability>=75?'안정권':stability>=50?'주의권':stability>=30?'위험권':'붕괴위험권';document.getElementById('report').textContent=`[HΣΛTWΔRΞ EVENT 경제자동판독 보고서]\n\n국가명: ${txt('country')}\n경제체제: ${txt('system')}\n현재년도: ${txt('year')}년\n예측기간: ${txt('period')}년\n\n사건명: ${txt('eventName')}\n사건유형: ${document.getElementById('eventType').selectedOptions[0].textContent}\n사건강도: ${impact} (${severityLabel(impact)})${mode==='zion'?' · 이스터에그: 시온이 행동 발동':mode==='yeonjae'?' · 이스터에그: 연재의 우월성 발동':''}\n\n[핵심 예측]\nGDP 지수: ${first.gdp} → ${last.gdp}\n국부 지수: ${first.wealth} → ${last.wealth}\n실업률: ${first.unemp}% → ${last.unemp}%\n물가변동률: ${first.infl}% → ${last.infl}%\nGDP 대비 부채율: ${first.debt}% → ${last.debt}%\n국가신용등급: ${txt('rating')} → ${newRating}\n\n[종합판정]\n경제 안정도는 ${stability}/100이며, 현재 판정은 '${tone}'입니다.\n${impact<0?'해당 사건은 국가경제에 하방 압력을 가하며, 실업률·부채율·신용위험 상승 가능성이 감지되었습니다.':'해당 사건은 국가경제에 성장 압력을 가하며, 생산력·국부·고용지표 개선 가능성이 감지되었습니다.'}\n\n주요 대형 은행: ${txt('banks')}\n주요 대기업: ${txt('corps')}\n국가주요산업: ${txt('industry')}`}
-function seedPastYearHistory(oldYear,gdp,pc,wealth,gni,infl,housing,unemp,debt,gini){
- const base=val('baseGrowth'), pop=val('popGrowth'), tech=val('techLevel'), ind=val('industryPower'), gov=val('govEff'), trade=val('tradeEnv'), rebuild=val('rebuildBonus');
- const pastCount=4;
- const trendBase=base+(tech-5)*.16+(ind-5)*.18+(gov-5)*.10+trade*.18+rebuild*.55;
- const waves=[-.55,.25,-.20,.42,.05];
- let growths=[];
- for(let i=0;i<=pastCount;i++){
-   let g=clamp(trendBase+waves[i%waves.length]+(i-pastCount)*.08,-6,10);
-   growths.push(+g.toFixed(2));
- }
- let rows=[];
- let cgdp=gdp,cpc=pc,cwealth=wealth,cgni=gni,cinfl=infl,chousing=housing,cunemp=unemp,cdebt=debt,cgini=gini;
- for(let idx=pastCount;idx>=0;idx--){
-   rows.unshift({
-    year:oldYear-(pastCount-idx),
-    growth:growths[idx],
-    gdp:+cgdp.toFixed(1), pc:+cpc.toFixed(1), gni:+cgni.toFixed(1), wealth:+cwealth.toFixed(1),
-    infl:+cinfl.toFixed(1), unemp:+cunemp.toFixed(1), debt:+cdebt.toFixed(1), housing:+chousing.toFixed(1), gini:+cgini.toFixed(3),
-    phase:idx===pastCount?'기준연도':phase(growths[idx]), baseline:idx===pastCount
-   });
-   if(idx>0){
-    const g=growths[idx]/100;
-    cgdp=cgdp/(1+g);
-    cpc=cpc/(1+(growths[idx]-pop)/100);
-    cgni=cgni/(1+(growths[idx]*.9)/100);
-    cwealth=cwealth/(1+(growths[idx]*.72+housing*.12)/100);
-    cinfl=clamp(cinfl-(growths[idx]>5?.18:growths[idx]<0?-.16:.03),-3,25);
-    cunemp=clamp(cunemp+growths[idx]*.13,.8,35);
-    cdebt=clamp(cdebt+growths[idx]*.22,0,300);
-    chousing=clamp(chousing-growths[idx]*.16,-30,60);
-    cgini=clamp(cgini-(growths[idx]>4?.0015:-.001),.15,.75);
-   }
- }
- yearHistory=rows;
+let currentType='nation';
+
+const templates={
+  nation:[
+    ['__section','국가 상징'],['국명',''],['영문명',''],['국기',''],['국장',''],['표어',''],['국가',''],
+    ['__section','기본 정보'],['수도',''],['최대도시',''],['위치',''],['면적',''],['인구',''],['공용어',''],['화폐',''],['국교',''],
+    ['__section','정치'],['정치체제',''],['국가원수',''],['정부수반',''],['입법부',''],['주요 정당',''],
+    ['__section','역사'],['건국',''],['주요 사건',''],['전쟁/분쟁',''],
+    ['__section','행정·군사·외교'],['행정구역',''],['군대',''],['동맹',''],['외교 관계','']
+  ],
+  person:[
+    ['본명',''],['이명',''],['출생',''],['출신지',''],['소속',''],['직위',''],['성격',''],['외형',''],['주요 행적',''],['역사','']
+  ],
+  group:[
+    ['단체명',''],['성격',''],['창설',''],['수장',''],['본부',''],['목적',''],['활동 지역',''],['역사','']
+  ]
+};
+
+const pageNames={nation:'국가 만들기',person:'인물 만들기',group:'단체 만들기'};
+
+const orgDefaultGov=[
+  {name:'재정경제부', subs:'국세청, 관세청, 조달청'},
+  {name:'과학기술정보통신부', subs:'우주항공청'},
+  {name:'교육부', subs:''},
+  {name:'외교부', subs:'재외동포청'},
+  {name:'통일부', subs:''},
+  {name:'법무부', subs:'검찰청, 공소청'},
+  {name:'국방부', subs:'병무청, 방위사업청'},
+  {name:'행정안전부', subs:'경찰청, 소방청, 중대범죄수사청'},
+  {name:'국가보훈부', subs:''},
+  {name:'문화체육관광부', subs:'국가유산청'},
+  {name:'농림축산식품부', subs:'농촌진흥청, 산림청'},
+  {name:'산업통상부', subs:''},
+  {name:'보건복지부', subs:'질병관리청'},
+  {name:'기후에너지환경부', subs:'기상청'},
+  {name:'고용노동부', subs:''},
+  {name:'성평등가족부', subs:''},
+  {name:'국토교통부', subs:'행정중심복합도시건설청, 새만금개발청'},
+  {name:'해양수산부', subs:'해양경찰청'},
+  {name:'중소벤처기업부', subs:''}
+];
+
+const orgDefaultLegends=[
+  {icon:'◉', text:'행정부', bg:'#ffffff', color:'#111111'},
+  {icon:'◉', text:'중앙행정기관 소속 본부', bg:'#ffffff', color:'#111111'},
+  {icon:'⚙', text:'국무총리 직속기관', bg:'#06456f', color:'#ffd400'},
+  {icon:'⚙', text:'국무총리 소속위원회', bg:'#06456f', color:'#ffd400'},
+  {icon:'☞', text:'대통령 직속기관', bg:'#06456f', color:'#ffffff'},
+  {icon:'☞', text:'대통령 소속위원회', bg:'#06456f', color:'#ffffff'},
+  {icon:'◎', text:'독립중앙행정기관', bg:'#06456f', color:'#ffffff'}
+];
+
+function hideAllScreens(){
+  document.getElementById('homeScreen').classList.add('hidden');
+  document.getElementById('editorScreen').classList.add('hidden');
+  document.getElementById('orgScreen').classList.add('hidden');
+  document.body.classList.remove('print-mode');
 }
-function advanceYear(){const oldYear=val('year'),gdp=val('gdp'),pc=val('gdpPc'),wealth=val('wealth'),gni=val('gni'),infl=val('inflation'),housing=val('housing'),unemp=val('unemp'),debt=val('debt'),gini=val('gini');if(yearHistory.length===0){seedPastYearHistory(oldYear,gdp,pc,wealth,gni,infl,housing,unemp,debt,gini);}const base=val('baseGrowth'),pop=val('popGrowth'),tech=val('techLevel'),ind=val('industryPower'),gov=val('govEff'),trade=val('tradeEnv'),rebuild=val('rebuildBonus'),vol=parseFloat(txt('yearRandom'));const inflationDrag=Math.max(0,infl-3)*.22, debtDrag=Math.max(0,debt-60)*.035, unempSlack=(5-unemp)*.18, inequalityDrag=Math.max(0,gini-.34)*8;let growth=base+(tech-5)*.22+(ind-5)*.28+(gov-5)*.18+trade*.32+rebuild+unempSlack-inflationDrag-debtDrag-inequalityDrag+(Math.random()*2-1)*vol;growth=clamp(growth,-8,12);const realGdp=gdp*(1+growth/100), realGni=gni*(1+(growth*.92+(trade*.08))/100), newWealth=wealth*(1+(growth*.75+housing*.18)/100), newPc=pc*(1+(growth-pop)/100);let newInfl=clamp(infl+(growth>6?.35:growth<0?-.2:.05)+(trade<0?Math.abs(trade)*.12:0)+(Math.random()*2-1)*.15,-3,25);let newUnemp=clamp(unemp-growth*.18+(pop>1.5?.1:0)+(Math.random()*2-1)*.12,.8,35);let newDebt=clamp(debt-growth*.32+(gov<4?.65:0)-(gov-5)*.08+(Math.random()*2-1)*.25,0,300);let newHousing=clamp(housing+growth*.22+pop*.18-newInfl*.04+(Math.random()*2-1)*.25,-30,60);let newGini=clamp(gini+(growth>4?.002:-.001)+(gov<4?.006:gov>7?-.003:0),.15,.75);setVal('year',oldYear+1,0);setVal('gdp',realGdp,1);setVal('gdpPc',newPc,1);setVal('wealth',newWealth,1);setVal('gni',realGni,1);setVal('inflation',newInfl,1);setVal('housing',newHousing,1);setVal('unemp',newUnemp,1);setVal('debt',newDebt,1);document.getElementById('gini').value=newGini.toFixed(3);const rec={year:oldYear+1,growth:+growth.toFixed(2),gdp:+realGdp.toFixed(1),pc:+newPc.toFixed(1),gni:+realGni.toFixed(1),wealth:+newWealth.toFixed(1),infl:+newInfl.toFixed(1),unemp:+newUnemp.toFixed(1),debt:+newDebt.toFixed(1),housing:+newHousing.toFixed(1),gini:+newGini.toFixed(3),phase:phase(growth),oldYear,oldGdp:gdp,oldPc:pc,oldGni:gni,oldWealth:wealth,oldInfl:infl,oldUnemp:unemp,oldDebt:debt};yearHistory.push(rec);renderYear(rec)}
-function renderYear(rec){document.getElementById('yearGrowthScore').textContent=(rec.growth>0?'+':'')+rec.growth+'%';document.getElementById('yearGdpScore').textContent=fmt(rec.gdp);document.getElementById('yearPcScore').textContent=fmt(rec.pc);document.getElementById('yearPhaseScore').textContent=rec.phase;renderYearChart();document.getElementById('yearMatrix').innerHTML=[['GDP',`${fmt(rec.oldGdp)} → ${fmt(rec.gdp)}`],['1인당 GDP',`${fmt(rec.oldPc)} → ${fmt(rec.pc)}`],['GNI',`${fmt(rec.oldGni)} → ${fmt(rec.gni)}`],['국부',`${fmt(rec.oldWealth)} → ${fmt(rec.wealth)}`],['물가',`${rec.oldInfl}% → ${rec.infl}%`],['실업률',`${rec.oldUnemp}% → ${rec.unemp}%`],['부채율',`${rec.oldDebt}% → ${rec.debt}%`],['주택가',`${rec.housing}%`],['지니계수',`${rec.gini}`]].map(([a,b])=>`<div class="matrix-card"><b>${a}</b><span>${b}</span></div>`).join('');document.getElementById('yearHistory').textContent=yearHistory.map(r=>`${r.year}년 | 성장률 ${r.growth>0?'+':''}${r.growth}% | GDP ${fmt(r.gdp)} | 실업률 ${r.unemp}% | 부채율 ${r.debt}% | ${r.phase}`).join('\n');document.getElementById('yearReport').textContent=`[HΣΛTWΔRΞ YEAR 연간 경제성장 보고서]\n\n대상국: ${txt('country')}\n회계연도: ${rec.oldYear}년 → ${rec.year}년\n경제체제: ${txt('system')}\n공식화폐/화폐가치: ${txt('currency')}\n\n[거시경제 종합]\n실질 GDP 성장률: ${rec.growth>0?'+':''}${rec.growth}%\n경제 국면 판정: ${rec.phase}\n실질 전체 GDP: ${fmt(rec.oldGdp)} → ${fmt(rec.gdp)}\n1인당 GDP: ${fmt(rec.oldPc)} → ${fmt(rec.pc)}\n실질 GNI: ${fmt(rec.oldGni)} → ${fmt(rec.gni)}\n국부: ${fmt(rec.oldWealth)} → ${fmt(rec.wealth)}\n\n[물가·고용·재정]\n소비자물가지수 변동률: ${rec.oldInfl}% → ${rec.infl}%\n토지·주택가 변동률: ${rec.housing}%\n실업률: ${rec.oldUnemp}% → ${rec.unemp}%\nGDP 대비 부채율: ${rec.oldDebt}% → ${rec.debt}%\n지니 계수: ${rec.gini}\n국가신용등급: ${txt('rating')}\n\n[성장 요인 판독]\n기준 성장률 ${txt('baseGrowth')}%, 인구증가율 ${txt('popGrowth')}%, 기술발전도 ${txt('techLevel')}/10, 산업경쟁력 ${txt('industryPower')}/10, 정부효율성 ${txt('govEff')}/10, 외부무역환경 ${txt('tradeEnv')}가 반영되었습니다.\n\n[운영 메모]\n해당 연도는 '${rec.phase}'으로 분류됩니다. 다음 세계관 연도 진행 시 이 수치를 최신 경제설정으로 사용하면 됩니다.\n\n주요 대형 은행: ${txt('banks')}\n주요 대기업: ${txt('corps')}\n국가주요산업: ${txt('industry')}`}
-function destroyYearCharts(){Object.values(yearChartObjs).forEach(c=>{try{c.destroy()}catch(e){}});yearChartObjs={}}
-function renderYearChart(){const chartsReady=['yearGdpChart','yearGrowthChart','yearLaborChart','yearFiscalChart'].every(id=>document.getElementById(id));if(!chartsReady||yearHistory.length===0)return;destroyYearCharts();const labels=yearHistory.map(r=>String(r.year)),gridColor='rgba(255,30,60,.12)',tickColor='#eee';const common={responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#eee',font:{weight:'900'}}},tooltip:{backgroundColor:'rgba(5,5,6,.95)',borderColor:'rgba(255,30,60,.8)',borderWidth:1}},scales:{x:{ticks:{color:tickColor,font:{weight:'900'}},grid:{color:'rgba(255,255,255,.07)'}}}};yearChartObjs.gdp=new Chart(document.getElementById('yearGdpChart').getContext('2d'),{type:'line',data:{labels,datasets:[{label:'실질 GDP',data:yearHistory.map(r=>r.gdp),borderColor:'#ff1e3c',backgroundColor:'rgba(255,30,60,.20)',borderWidth:5,tension:.22,pointRadius:5,fill:true},{label:'실질 GNI',data:yearHistory.map(r=>r.gni),borderColor:'#f2f2f2',backgroundColor:'rgba(255,255,255,.06)',borderWidth:3,tension:.22,pointRadius:4,fill:false}]},options:{...common,scales:{...common.scales,y:{ticks:{color:'#ff9aaa',font:{weight:'900'}},grid:{color:gridColor}}}}});yearChartObjs.growth=new Chart(document.getElementById('yearGrowthChart').getContext('2d'),{type:'bar',data:{labels:yearHistory.map(r=>String(r.year)),datasets:[{label:'실질 성장률 %',data:yearHistory.map(r=>r.growth),borderColor:'#ff1e3c',backgroundColor:yearHistory.map(r=>r.baseline?'rgba(255,255,255,.38)':'rgba(255,30,60,.45)'),borderWidth:2}]},options:{...common,scales:{...common.scales,y:{ticks:{color:'#fff',callback:v=>v+'%'},grid:{color:gridColor}}}}});yearChartObjs.labor=new Chart(document.getElementById('yearLaborChart').getContext('2d'),{type:'line',data:{labels,datasets:[{label:'실업률 %',data:yearHistory.map(r=>r.unemp),borderColor:'#ff1e3c',backgroundColor:'rgba(255,30,60,.08)',borderWidth:4,tension:.25,pointRadius:4},{label:'물가상승률 %',data:yearHistory.map(r=>r.infl),borderColor:'#f2f2f2',backgroundColor:'rgba(255,255,255,.06)',borderWidth:3,tension:.25,pointRadius:4}]},options:{...common,scales:{...common.scales,y:{ticks:{color:'#fff',callback:v=>v+'%'},grid:{color:gridColor}}}}});yearChartObjs.fiscal=new Chart(document.getElementById('yearFiscalChart').getContext('2d'),{type:'line',data:{labels,datasets:[{label:'부채율 %',data:yearHistory.map(r=>r.debt),borderColor:'#ff1e3c',backgroundColor:'rgba(255,30,60,.08)',borderWidth:4,tension:.25,pointRadius:4,yAxisID:'y'},{label:'국부 지수',data:yearHistory.map(r=>+(r.wealth/yearHistory[0].wealth*100).toFixed(1)),borderColor:'#f2f2f2',backgroundColor:'rgba(255,255,255,.06)',borderWidth:3,tension:.25,pointRadius:4,yAxisID:'y1'}]},options:{...common,scales:{...common.scales,y:{position:'left',ticks:{color:'#ff9aaa',callback:v=>v+'%'},grid:{color:gridColor}},y1:{position:'right',ticks:{color:'#fff'},grid:{drawOnChartArea:false}}}}})}
-function copyReport(id){navigator.clipboard.writeText(document.getElementById(id).textContent).then(()=>alert('보고서가 복사되었습니다.'))}
+
+function setActiveNav(id){
+  document.querySelectorAll('.menu button').forEach(btn=>btn.classList.remove('active'));
+  const target=document.getElementById(id);
+  if(target) target.classList.add('active');
+}
+
+function showHome(){
+  hideAllScreens();
+  document.getElementById('homeScreen').classList.remove('hidden');
+  setActiveNav('navHome');
+}
+
+function showPage(type){
+  hideAllScreens();
+  currentType=type;
+  document.getElementById('editorScreen').classList.remove('hidden');
+  document.getElementById('editorTitle').textContent=pageNames[type];
+  setActiveNav(type==='nation'?'navNation':type==='person'?'navPerson':'navGroup');
+
+  document.getElementById('titleKo').value=type==='nation'?'국가명':type==='person'?'인물명':'단체명';
+  document.getElementById('titleEn').value=type==='nation'?'Nation Profile':type==='person'?'Character Profile':'Organization Profile';
+
+  setFields(templates[type]);
+  setImageMode('portrait');
+  render();
+}
+
+function setFields(arr){
+  document.getElementById('fields').innerHTML='';
+  arr.forEach(item=>{
+    if(item[0]==='__section') addSection(item[1], false);
+    else addField(item[0], item[1], false);
+  });
+  render();
+}
+
+function addField(label='', value='', doRender=true){
+  const wrap=document.createElement('div');
+  wrap.className='field item';
+  wrap.innerHTML=`
+    <label>항목명 <button class="remove" onclick="this.closest('.item').remove();render()">삭제</button></label>
+    <input class="key" value="${escapeAttr(label)}" oninput="render()">
+    <textarea class="val" oninput="render()">${escapeHtml(value)}</textarea>
+  `;
+  document.getElementById('fields').appendChild(wrap);
+  if(doRender) render();
+}
+
+function addSection(label='구분', doRender=true){
+  const wrap=document.createElement('div');
+  wrap.className='field item section-item';
+  wrap.dataset.section='true';
+  wrap.innerHTML=`
+    <label>구분 제목 <button class="remove" onclick="this.closest('.item').remove();render()">삭제</button></label>
+    <input class="key" value="${escapeAttr(label)}" oninput="render()">
+    <textarea class="val"></textarea>
+  `;
+  document.getElementById('fields').appendChild(wrap);
+  if(doRender) render();
+}
+
+function render(){
+  document.getElementById('pTitleKo').textContent=document.getElementById('titleKo').value || '제목';
+  document.getElementById('pTitleEn').textContent=document.getElementById('titleEn').value || 'Subtitle';
+
+  const tbody=document.getElementById('previewTable');
+  tbody.innerHTML='';
+
+  document.querySelectorAll('.item').forEach(item=>{
+    const key=item.querySelector('.key').value || '항목';
+    const val=item.querySelector('.val').value || ' ';
+    if(item.dataset.section==='true'){
+      tbody.innerHTML += `<tr class="section-title"><td colspan="2">${escapeHtml(key)}</td></tr>`;
+    }else{
+      tbody.innerHTML += `<tr><th>${escapeHtml(key)}</th><td>${escapeHtml(val)}</td></tr>`;
+    }
+  });
+}
+
+function loadImage(e){
+  const file=e.target.files[0];
+  if(!file) return;
+  const reader=new FileReader();
+  reader.onload=()=>{
+    document.getElementById('pImage').innerHTML=`<img src="${reader.result}" alt="대표 이미지">`;
+  };
+  reader.readAsDataURL(file);
+}
+
+function setImageMode(mode){
+  const box=document.getElementById('pImage');
+  box.classList.remove('portrait','landscape');
+  box.classList.add(mode);
+
+  document.getElementById('portraitBtn').classList.toggle('active', mode==='portrait');
+  document.getElementById('landscapeBtn').classList.toggle('active', mode==='landscape');
+}
+
+function setBoxColor(value){
+  document.documentElement.style.setProperty('--boxColor', value);
+}
+
+function showOrgChart(){
+  hideAllScreens();
+  document.getElementById('orgScreen').classList.remove('hidden');
+  setActiveNav('navOrg');
+
+  const box=document.getElementById('orgFields');
+  if(box.children.length===0){
+    orgDefaultGov.forEach(item=>addOrgCell(item.name, item.subs, false));
+  }
+
+  const legendBox=document.getElementById('legendFields');
+  if(legendBox.children.length===0){
+    orgDefaultLegends.forEach(item=>addLegendItem(item.icon, item.text, item.bg, item.color, false));
+  }
+
+  setOrgColors();
+  renderOrgChart();
+}
+
+function addOrgCell(name='', subs='', doRender=true){
+  const wrap=document.createElement('div');
+  wrap.className='org-item';
+  wrap.dataset.blank='false';
+  wrap.innerHTML=`
+    <label>기관명</label>
+    <input class="org-name-input" value="${escapeAttr(name)}" oninput="renderOrgChart()">
+    <label>하위기관</label>
+    <textarea class="org-sub-input" oninput="renderOrgChart()">${escapeHtml(subs)}</textarea>
+    <button class="remove" onclick="this.closest('.org-item').remove();renderOrgChart()">삭제</button>
+  `;
+  document.getElementById('orgFields').appendChild(wrap);
+  if(doRender) renderOrgChart();
+}
+
+function addBlankOrgCell(){
+  const wrap=document.createElement('div');
+  wrap.className='org-item';
+  wrap.dataset.blank='true';
+  wrap.innerHTML=`
+    <label>빈칸</label>
+    <input class="org-name-input" value="빈칸" disabled>
+    <textarea class="org-sub-input" disabled></textarea>
+    <button class="remove" onclick="this.closest('.org-item').remove();renderOrgChart()">삭제</button>
+  `;
+  document.getElementById('orgFields').appendChild(wrap);
+  renderOrgChart();
+}
+
+function removeLastOrgCell(){
+  const box=document.getElementById('orgFields');
+  if(box.lastElementChild) box.lastElementChild.remove();
+  renderOrgChart();
+}
+
+
+function setOrgColors(){
+  document.documentElement.style.setProperty('--orgMain', document.getElementById('orgMainColor').value);
+  document.documentElement.style.setProperty('--orgText', document.getElementById('orgTextColor').value);
+  document.documentElement.style.setProperty('--orgSub', document.getElementById('orgSubColor').value);
+  document.documentElement.style.setProperty('--orgBadge', document.getElementById('orgBadgeColor').value);
+  document.documentElement.style.setProperty('--orgNote', document.getElementById('orgNoteColor').value);
+  renderOrgChart();
+}
+
+function addLegendItem(icon='◉', text='새 범례', bg='#ffffff', color='#111111', doRender=true){
+  const wrap=document.createElement('div');
+  wrap.className='legend-item';
+  wrap.innerHTML=`
+    <div class="legend-grid">
+      <div>
+        <label>기호</label>
+        <input class="legend-icon-input" value="${escapeAttr(icon)}" oninput="renderOrgChart()">
+      </div>
+      <div>
+        <label>이름</label>
+        <input class="legend-text-input" value="${escapeAttr(text)}" oninput="renderOrgChart()">
+      </div>
+    </div>
+    <div class="legend-colors">
+      <div>
+        <label>배경색</label>
+        <input type="color" class="legend-bg-input" value="${escapeAttr(bg)}" oninput="renderOrgChart()">
+      </div>
+      <div>
+        <label>글씨색</label>
+        <input type="color" class="legend-color-input" value="${escapeAttr(color)}" oninput="renderOrgChart()">
+      </div>
+    </div>
+    <button class="remove" onclick="this.closest('.legend-item').remove();renderOrgChart()">삭제</button>
+  `;
+  document.getElementById('legendFields').appendChild(wrap);
+  if(doRender) renderOrgChart();
+}
+
+function removeLastLegendItem(){
+  const box=document.getElementById('legendFields');
+  if(box.lastElementChild) box.lastElementChild.remove();
+  renderOrgChart();
+}
+
+function renderLegend(){
+  const legend=document.getElementById('orgLegend');
+  if(!legend) return;
+  legend.innerHTML='';
+
+  document.querySelectorAll('.legend-item').forEach(item=>{
+    const icon=item.querySelector('.legend-icon-input').value || '';
+    const text=item.querySelector('.legend-text-input').value || '범례';
+    const bg=item.querySelector('.legend-bg-input').value || '#ffffff';
+    const color=item.querySelector('.legend-color-input').value || '#111111';
+
+    const span=document.createElement('span');
+    span.className='legend-badge';
+    span.style.backgroundColor=bg;
+    span.style.color=color;
+    span.textContent=(icon ? icon + ' ' : '') + text;
+    legend.appendChild(span);
+  });
+}
+
+
+function loadOrgLogo(e){
+  const file=e.target.files[0];
+  if(!file) return;
+
+  const reader=new FileReader();
+  reader.onload=()=>{
+    const mark=document.getElementById('orgLogoMark');
+    mark.innerHTML=`<img src="${reader.result}" alt="상징 이미지">`;
+  };
+  reader.readAsDataURL(file);
+}
+
+function renderOrgChart(){
+  document.getElementById('orgPreviewTopName').textContent=document.getElementById('orgTopName').value || '정부';
+  document.getElementById('orgPreviewMainTitle').textContent=document.getElementById('orgMainTitle').value || '조직도';
+  document.getElementById('orgPreviewSubtitle').textContent=document.getElementById('orgSubtitle').value || ' ';
+  document.getElementById('orgPreviewNote').textContent=document.getElementById('orgNote').value || ' ';
+
+  const grid=document.getElementById('orgGrid');
+  grid.innerHTML='';
+
+  document.querySelectorAll('.org-item').forEach(item=>{
+    const cell=document.createElement('div');
+
+    if(item.dataset.blank==='true'){
+      cell.className='org-cell blank';
+      cell.innerHTML='<div class="org-name">&nbsp;</div><div class="org-sub">&nbsp;</div>';
+      grid.appendChild(cell);
+      return;
+    }
+
+    const name=item.querySelector('.org-name-input').value || '기관명';
+    const subs=item.querySelector('.org-sub-input').value || '';
+    const badges=subs.split(',').map(x=>x.trim()).filter(Boolean)
+      .map(x=>`<span class="badge">${escapeHtml(x)}</span>`).join('');
+
+    cell.className='org-cell';
+    cell.innerHTML=`
+      <div class="org-name">${escapeHtml(name)}</div>
+      <div class="org-sub">${badges || '&nbsp;'}</div>
+    `;
+    grid.appendChild(cell);
+  });
+
+  renderLegend();
+}
+
+function togglePrintMode(){
+  document.body.classList.toggle('print-mode');
+}
+
+async function saveAsImage(){
+  const orgVisible=!document.getElementById('orgScreen').classList.contains('hidden');
+  const target=orgVisible ? document.getElementById('orgCaptureArea') : document.getElementById('captureArea');
+
+  if(!target){
+    alert('저장할 영역을 찾지 못했습니다.');
+    return;
+  }
+
+  document.body.classList.add('capturing');
+  try{
+    const canvas=await html2canvas(target,{
+      scale:2,
+      backgroundColor:'#070707',
+      useCORS:true,
+      logging:false
+    });
+
+    const a=document.createElement('a');
+    const title=orgVisible
+      ? document.getElementById('orgPreviewMainTitle').textContent
+      : document.getElementById('pTitleKo').textContent;
+
+    const name=(title || 'HΣΛTWΔRΞ_설정표')
+      .replace(/[\/:*?"<>|\s]+/g,'_')
+      .slice(0,40);
+
+    a.download=name+'.png';
+    a.href=canvas.toDataURL('image/png');
+    a.click();
+  }catch(err){
+    console.error(err);
+    alert('이미지 저장 실패. 인터넷 연결 상태를 확인하거나 다시 시도해주세요.');
+  }finally{
+    document.body.classList.remove('capturing');
+  }
+}
+
+function escapeHtml(text){
+  return String(text).replace(/[&<>'"]/g, c=>({
+    '&':'&amp;',
+    '<':'&lt;',
+    '>':'&gt;',
+    "'":'&#39;',
+    '"':'&quot;'
+  }[c]));
+}
+function escapeAttr(text){
+  return escapeHtml(text).replace(/`/g,'&#96;');
+}
+
+showHome();
 </script>
-</body></html>
+</body>
+</html>
