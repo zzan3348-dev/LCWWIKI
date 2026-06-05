@@ -1176,6 +1176,45 @@ textarea{min-height:66px;resize:vertical}
 .parliament-speaker .speaker-name{font-size:12px!important;}
 .parliament-speaker .speaker-party{font-size:10px!important;}
 
+/* ===== PARLIAMENT INFO TABLE COLOR + EXTRA ROWS ===== */
+:root{
+  --parliamentInfoHead:#76000b;
+  --parliamentInfoHeadText:#f6d34a;
+  --parliamentInfoBody:#ffffff;
+  --parliamentInfoBodyText:#111111;
+}
+.parliament-info-table th{
+  background:var(--parliamentInfoHead)!important;
+  color:var(--parliamentInfoHeadText)!important;
+}
+.parliament-info-table td{
+  background:var(--parliamentInfoBody)!important;
+  color:var(--parliamentInfoBodyText)!important;
+}
+.parliament-extra-item{
+  border:1px solid #333;
+  border-radius:10px;
+  padding:10px;
+  background:#171717;
+  margin-bottom:10px;
+}
+.parliament-extra-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+.parliament-extra-item .remove{
+  float:none;
+  width:100%;
+  margin-top:8px;
+  padding:7px;
+}
+.parliament-color-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
 </style>
 </head>
 <body>
@@ -1410,6 +1449,32 @@ textarea{min-height:66px;resize:vertical}
       <textarea id="parliamentDescription" oninput="renderParliament()">HΣΛTWΔRΞ 입법부의 최고 의결기관이다. 예산, 법률, 조약 비준, 정부 감시 기능을 수행한다.</textarea>
     </div>
 
+    <h3 style="margin:18px 0 10px;border-left:4px solid var(--accent2);padding-left:8px">국회 정보표 색상</h3>
+    <div class="parliament-color-grid">
+      <div class="field">
+        <label>항목칸 배경색</label>
+        <input type="color" id="parliamentInfoHeadColor" value="#76000b" oninput="setParliamentInfoColors()">
+      </div>
+      <div class="field">
+        <label>항목칸 글씨색</label>
+        <input type="color" id="parliamentInfoHeadTextColor" value="#f6d34a" oninput="setParliamentInfoColors()">
+      </div>
+      <div class="field">
+        <label>내용칸 배경색</label>
+        <input type="color" id="parliamentInfoBodyColor" value="#ffffff" oninput="setParliamentInfoColors()">
+      </div>
+      <div class="field">
+        <label>내용칸 글씨색</label>
+        <input type="color" id="parliamentInfoBodyTextColor" value="#111111" oninput="setParliamentInfoColors()">
+      </div>
+    </div>
+
+    <h3 style="margin:18px 0 10px;border-left:4px solid var(--accent2);padding-left:8px">국회 정보표 항목 추가</h3>
+    <div id="parliamentExtraFields"></div>
+    <button class="btn secondary" onclick="addParliamentExtraRow()">항목 추가</button>
+    <button class="btn secondary" onclick="removeLastParliamentExtraRow()">마지막 항목 삭제</button>
+
+
 
     <div class="field">
       <label>의장석 문구</label>
@@ -1510,6 +1575,7 @@ textarea{min-height:66px;resize:vertical}
             <td id="parliamentInfoDescription" class="parliament-description"></td>
           </tr>
         </tbody>
+        <tbody id="parliamentExtraPreviewRows"></tbody>
       </table>
     </div>
   </section>
@@ -1911,7 +1977,14 @@ function showParliament(){
     parliamentDefaultParties.forEach(item=>addParty(item.name, item.seats, item.color, false));
   }
 
+  const extraBox=document.getElementById('parliamentExtraFields');
+  if(extraBox && extraBox.children.length===0){
+    addParliamentExtraRow('최근 선거', '제22대 중앙의회 의원 선거', false);
+    addParliamentExtraRow('차기 선거', '제23대 중앙의회 의원 선거', false);
+  }
+
   setParliamentColors();
+  setParliamentInfoColors();
   renderParliament();
 }
 
@@ -2116,6 +2189,63 @@ function buildHemicycleLayout(totalSeats){
   return positions;
 }
 
+
+function setParliamentInfoColors(){
+  const head=document.getElementById('parliamentInfoHeadColor')?.value || '#76000b';
+  const headText=document.getElementById('parliamentInfoHeadTextColor')?.value || '#f6d34a';
+  const body=document.getElementById('parliamentInfoBodyColor')?.value || '#ffffff';
+  const bodyText=document.getElementById('parliamentInfoBodyTextColor')?.value || '#111111';
+
+  document.documentElement.style.setProperty('--parliamentInfoHead', head);
+  document.documentElement.style.setProperty('--parliamentInfoHeadText', headText);
+  document.documentElement.style.setProperty('--parliamentInfoBody', body);
+  document.documentElement.style.setProperty('--parliamentInfoBodyText', bodyText);
+  renderParliament();
+}
+
+function addParliamentExtraRow(label='새 항목', value='내용을 입력하세요', doRender=true){
+  const box=document.getElementById('parliamentExtraFields');
+  if(!box) return;
+
+  const wrap=document.createElement('div');
+  wrap.className='parliament-extra-item';
+  wrap.innerHTML=`
+    <div class="parliament-extra-grid">
+      <div>
+        <label>항목명</label>
+        <input class="parliament-extra-label" value="${escapeAttr(label)}" oninput="renderParliament()">
+      </div>
+      <div>
+        <label>내용</label>
+        <input class="parliament-extra-value" value="${escapeAttr(value)}" oninput="renderParliament()">
+      </div>
+    </div>
+    <button class="remove" onclick="this.closest('.parliament-extra-item').remove();renderParliament()">삭제</button>
+  `;
+  box.appendChild(wrap);
+  if(doRender) renderParliament();
+}
+
+function removeLastParliamentExtraRow(){
+  const box=document.getElementById('parliamentExtraFields');
+  if(box && box.lastElementChild) box.lastElementChild.remove();
+  renderParliament();
+}
+
+function renderParliamentExtraRows(){
+  const target=document.getElementById('parliamentExtraPreviewRows');
+  if(!target) return;
+
+  const rows=Array.from(document.querySelectorAll('.parliament-extra-item')).map(item=>{
+    const label=item.querySelector('.parliament-extra-label')?.value || '항목';
+    const value=item.querySelector('.parliament-extra-value')?.value || ' ';
+    return `<tr><th>${escapeHtml(label)}</th><td>${escapeHtml(value)}</td></tr>`;
+  }).join('');
+
+  target.innerHTML=rows;
+}
+
+
 function renderParliament(){
   const topName=document.getElementById('parliamentTopName')?.value || '입법부';
   const mainTitle=document.getElementById('parliamentMainTitle')?.value || '의회 의석 배치도';
@@ -2189,6 +2319,8 @@ function renderParliament(){
       <span class="parliament-party-seats">${p.seats}석</span>
     </div>
   `).join('');
+
+  renderParliamentExtraRows();
 }
 
 function escapeHtml(text){
